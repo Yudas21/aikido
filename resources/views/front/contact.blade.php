@@ -78,7 +78,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					<div class="contact">
 						<div class="container">
 							<div class="contact-bottom">
-								<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d98171.84585504433!2d-86.19833174029957!3d39.74256682401258!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x886b50bb31656d1f%3A0xdfefd0a5be760c0a!2sUnited+States+Diving+Inc!5e0!3m2!1sen!2sin!4v1452153653900"  frameborder="0" style="border:0" allowfullscreen></iframe>
+								<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5608.540474886801!2d106.8336225056813!3d-6.285145935955824!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f213b9a1b9db%3A0x35951e9783a0f5a6!2sGelanggang+Remaja+Kecamatan+Pasar+Minggu!5e0!3m2!1sid!2sid!4v1536890331733" frameborder="0" style="border:0" allowfullscreen></iframe>
 							</div>
 							<div class="col-md-8 contact-left">
 								<h4>Form Kontak</h4>
@@ -117,7 +117,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 							<a href="#"><i class="icon4"></i></a>
 						</div>
 						<div class="footer-top">
-							<p>&copy; 2018 Perguruan Aikido SAF Dojo . All rights reserved</p>
+							<p>&copy; 2018 Perguruan Aikido SAF Dojo. All rights reserved</p>
 						</div>						
 					</div>
 				</div>

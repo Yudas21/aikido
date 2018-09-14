@@ -153,7 +153,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 							<a href="#"><i class="icon4"></i></a>
 						</div>
 						<div class="footer-top">
-							<p>&copy; 2018 Perguruan Aikido SAF Dojo . All rights reserved</p>
+							<p>&copy; 2018 Perguruan Aikido SAF Dojo. All rights reserved</p>
 						</div>						
 					</div>
 				</div>
