@@ -23,4 +23,9 @@ Route::get('/', function () {
 });
 Route::get('/', 'HomeController@index');
 Route::get('about', 'AboutController@index');
+Route::get('contact', 'ContactController@index');
+Route::get('gallery/foto', 'GalleryController@foto');
+Route::get('gallery/video', 'GalleryController@video');
+Route::get('news', 'NewsController@index');
+Route::get('schedule', 'ScheduleController@index');
 
