@@ -24,7 +24,7 @@
               <!-- Default box -->
               <div class="card">
                 <div class="card-header">
-                  <h3 class="card-title">Akses Level sebagai <strong></strong></h3>
+                  <h3 class="card-title">Akses Level sebagai <strong>{{ Indras::get_level_name($id) }}</strong></h3>
 
                   <div class="card-tools">
                     <button type="button" class="btn btn-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
@@ -36,6 +36,12 @@
                 <div class="card-body">
                      <div class="row">
                         <div class="col-sm-12">
+                                @if($message = Session::get('message'))
+                                   <div class="alert alert-success alert-dismissible">
+                                      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                      <i class="icon fa fa-check"></i> {{ $message }}
+                                    </div> 
+                                @endif
                                 <?php $kumpulan_menu = array();?>
                                 @foreach ($access as $d_access)
                                   <?php $kumpulan_menu[] = $d_access->menu_id; ?>
@@ -83,7 +89,7 @@
               </div>
             </section>
           </div>
-          @section('myjsfile')
+          <!-- @section('myjsfile')
             
-          @endsection
+          @endsection -->
           @stop

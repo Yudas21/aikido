@@ -13,7 +13,8 @@ use App\Level;
 use App\Akses;
 use Indras;
 use App\User;
-
+use App\Page;
+use App\News;
 
 class AdminController extends Controller
 {
@@ -148,7 +149,7 @@ class AdminController extends Controller
     }
 
     public function menu_destroy($id){
-        $delete = Menu::findOrFail($id)->delete();
+        Menu::findOrFail($id)->delete();
         return redirect('admin/menu')->with('message', 'Data menu berhasil dihapus');
     }
 
@@ -179,7 +180,7 @@ class AdminController extends Controller
             'name' => $request->name_old == $request->name ? 'required' : 'required|unique:level,name' 
         ]);
 
-        Level::where('id', $id)->update([
+        Level::findOrFail($id)->update([
             'name' => $request->name
         ]);
 
@@ -187,7 +188,7 @@ class AdminController extends Controller
     }
 
     public function level_destroy($id){
-        $delete = Level::findOrFail($id)->delete();
+        Level::findOrFail($id)->delete();
         return redirect('admin/level')->with('message', 'Level berhasil dihapus!');
     }
 
@@ -266,82 +267,287 @@ class AdminController extends Controller
         return view('admin.users', compact('data'));
     }
 
+    public function users_add(){
+        $level = Level::all();
+        return view('admin.users_add', compact('level'));
+    }    
+
     public function users_store(Request $request){
         $this->validate($request, [
-            'nama_lengkap' => 'required',
-            'username' => 'required|unique:users,username',
-            'id_branch' => 'required',
+            'name' => 'required',
+            'email' => 'required|unique:users,email',
             'password' => 'required|string|min:5',
             'password_confirm' => 'required|string|same:password|min:5',
-            'id_level' => 'required'
+            'level' => 'required'
         ]);
 
-        $create = User::create([
-            'username' => $request->username,
-            'nama_lengkap' => $request->nama_lengkap,
-            'tgl_lahir' => $request->tgl_lahir,
-            'tempat_lahir' => $request->tempat_lahir,
-            'alamat' => $request->alamat,
-            'mobile' => $request->mobile,
+        User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'level' => $request->level,
+            'status' => '1',
             'password' => Hash::make($request->password),
-            'id_branch' => $request->id_branch,
-            'kode_branch' => Brimc::get_branch_code($request->id_branch),
-            'nama_branch' => Brimc::get_branch_name($request->id_branch),
-            'id_level' => $request->id_level,
-            'user_type'  => $request->user_type,
-            'active' => '1',
             'created_at' => date('Y-m-d H:i:s'),
             'updated_at' => date('Y-m-d H:i:s')
         ]);
-        return response()->json($create);
+        return redirect('admin/users')->with('message', 'Tambah user baru berhasil!');
     }
 
-    public function users_update($id, Request $request){
+    public function users_update($id){
+        $level = Level::all();
+        $data = User::where('id', $id)->first();
+        return view('admin.users_update', compact('data', 'level'));
+    }
+
+    public function users_pupdate($id, Request $request){
         $this->validate($request, [
-            'nama_lengkap' => 'required',
-            'username' => $request->username == $request->usernameold ? 'required' : 'required|unique:users,username',
-            'id_branch' => 'required',
-            'id_level' => 'required',
-            'active' => 'required'
+            'name' => 'required',
+            'email' => $request->email == $request->email_old ? 'required' : 'required|unique:users,email',
+            'level' => 'required',
+            'status' => 'required'
         ]);
 
-      $edit = User::where('id_user', $id)->update([
-            'username' => $request->username,
-            'nama_lengkap' => $request->nama_lengkap,
-            'tgl_lahir' => $request->tgl_lahir,
-            'tempat_lahir' => $request->tempat_lahir,
-            'alamat' => $request->alamat,
-            'mobile' => $request->mobile,
-            'id_branch' => $request->id_branch,
-            'kode_branch' => Brimc::get_branch_code($request->id_branch),
-            'nama_branch' => Brimc::get_branch_name($request->id_branch),
-            'id_level' => $request->id_level,
-            'user_type' => $request->user_type,
-            'active' => $request->active,
+      User::findOrFail($id)->update([
+            'name' => $request->name,
+            'email' => $request->email,
+            'level' => $request->level,
+            'status' => $request->status,
             'updated_at' => date('Y-m-d H:i:s')
         ]);
 
-        return response()->json($edit);
+        return redirect('admin/users')->with('message', 'Update user berhasil!');
     }
 
-    public function users_update_password($id, Request $request){
+    public function users_update_password($id){
+        return view('admin.users_update_password', compact('id'));
+    }
+
+    public function users_pupdate_password($id, Request $request){
         
         $this->validate($request, [
             'password' => 'required|string|min:5',
             'password_confirm' => 'required|string|same:password|min:5'
         ]);
 
-        $edit = User::where('id_user', $id)->update([
+        User::findOrFail($id)->update([
             'password' => Hash::make($request->password),
             'updated_at' => date('Y-m-d H:i:s')
         ]);
 
-        return response()->json($edit);
+        return redirect('admin/users')->with('message', 'Update password user berhasil!');
     }
 
     public function users_delete($id){
-        $delete = User::where('id_user', $id)->delete();
-        return response()->json($delete);
+        User::findOrFail($id)->delete();
+        return redirect('admin/users')->with('message', 'Hapus user berhasil!');
+    }
+
+    public function pages(){
+        $data = Page::all();
+        return view('admin.pages', compact('data'));
+    }
+
+    public function pages_add(){
+        return view('admin.pages_add');
+    }
+
+    public function pages_store(Request $request){
+        $this->validate($request, [
+            'name' => 'required|unique:page,name',
+            'page_content' => 'required'
+        ]);
+
+        Page::create([
+                       'name' => $request->name,
+                       'page_content' => $request->page_content
+        ]);
+        
+        return redirect('admin/pages')->with('message', 'Page baru berhasil ditambah!');
+    }
+
+    public function pages_update($id){
+        $data = Page::where('id',$id)->first();
+        return view('admin.pages_update', compact('data'));
+        // return $data;
+    }
+
+    public function pages_pupdate($id, Request $request){
+        
+        $this->validate($request, [
+            'name' => $request->name_old == $request->name ? 'required' : 'required|unique:page,name',
+            'page_content' => 'required' 
+        ]);
+
+        Page::findOrFail($id)->update([
+            'name' => $request->name,
+            'page_content' => $request->page_content
+        ]);
+
+        return redirect('admin/pages')->with('message', 'Page berhasil diubah!');
+    }
+
+    public function pages_upload($id){
+        $data = Page::where('id',$id)->first();
+        return view('admin.pages_upload', compact('data'));
+    }
+
+    public function pages_pupload($id, Request $request){
+        $this->validate($request, [
+            'page_image' => 'required|file|max:2000'
+        ]);
+        $file = Indras::get_page_image($id);
+        $uploadedFile = $request->file('page_image'); 
+        $path = $uploadedFile->store('public/pages');
+        $pecah = explode('/', $path);
+
+        if($file != '' || $file != NULL){
+            unlink(storage_path('app/public/pages/'.$file));
+        }
+        
+        Page::findOrFail($id)->update([
+            'page_image' => trim($pecah[2]),
+            'updated_at' => date('Y-m-d H:i:s')
+        ]);
+
+        return redirect('admin/pages')->with('message', 'Image page berhasil diganti!');
+    }
+
+    public function pages_destroy($id){
+        Page::findOrFail($id)->delete();
+        return redirect('admin/pages')->with('message', 'Page berhasil dihapus!');
+    }
+
+    public function news(){
+        $data = DB::table('news as a')->select('a.id', 'a.news_title','a.news_publish','b.name as author', 'a.news_image', 'a.news_content')->join('users as b', 'b.id', '=', 'a.created_by')->get();
+        return view('admin.news', compact('data'));
+    }
+
+    public function news_add(){
+        return view('admin.news_add');
+    }
+
+    public function news_store(Request $request){
+        $this->validate($request, [
+            'news_title' => 'required',
+            'news_content' => 'required',
+            'news_publish' => 'required' 
+        ]);
+
+        News::create([
+            'news_title' => $request->news_title,
+            'news_content' => $request->news_content,
+            'news_publish' => $request->news_publish,
+            'news_slug' => str_slug($request->news_title, '-'),
+            'created_by' => session('uid'),
+            'created_at' => date('Y-m-d H:i:s'),
+            'updated_at' => date('Y-m-d H:i:s')
+        ]);
+        
+        return redirect('admin/news')->with('message', 'Berita baru berhasil ditambah!');
+    }
+
+    public function news_update($id){
+        $data = News::where('id',$id)->first();
+        return view('admin.news_update', compact('data'));
+        // return $data;
+    }
+
+    public function news_pupdate($id, Request $request){
+        
+        $this->validate($request, [
+            'news_title' => 'required',
+            'news_content' => 'required',
+            'news_publish' => 'required' 
+        ]);
+
+        News::findOrFail($id)->update([
+            'news_title' => $request->news_title,
+            'news_content' => $request->news_content,
+            'news_publish' => $request->news_publish,
+            'news_slug' => str_slug($request->news_title, '-'),
+            'updated_by' => session('uid'),
+            'updated_at' => date('Y-m-d H:i:s')
+        ]);
+
+        return redirect('admin/news')->with('message', 'Berita berhasil diubah!');
+    }
+
+    public function news_upload($id){
+        $data = News::where('id',$id)->first();
+        return view('admin.news_upload', compact('data'));
+    }
+
+    public function news_pupload($id, Request $request){
+        $this->validate($request, [
+            'news_image' => 'required|file|max:2000'
+        ]);
+        $file = Indras::get_news_image($id);
+        $uploadedFile = $request->file('news_image'); 
+        $path = $uploadedFile->store('public/news');
+        $pecah = explode('/', $path);
+
+        if($file != '' || $file != NULL){
+            unlink(storage_path('app/public/news/'.$file));
+        }
+        
+        Page::findOrFail($id)->update([
+            'news_image' => trim($pecah[2]),
+            'updated_at' => date('Y-m-d H:i:s')
+        ]);
+
+        return redirect('admin/news')->with('message', 'Gambar berita berhasil diganti!');
+    }
+
+    public function news_destroy($id){
+        News::findOrFail($id)->delete();
+        return redirect('admin/news')->with('message', 'Berita berhasil dihapus!');
+    }
+
+    public function schedule(){
+        $data = Schedule::all();
+        return view('admin.schedule', compact('data'));
+    }
+
+    public function schedule_add(){
+        return view('admin.schedule_add');
+    }
+
+    public function schedule_update($id){
+        $data = Schedule::where('id',$id)->first();
+        return view('admin.schedule_update', compact('data'));
+    }
+
+    public function schedule_store(Request $request){
+        $this->validate($request, [
+            'name' => 'required|string'
+        ]);
+
+        $create = Menu::create([
+            'name' => $request->name,
+            'url' => $request->url,
+            'parent' => $request->parent
+        ]);
+        
+        return redirect('admin/schedule')->with('message', 'Jadwal baru berhasil disimpan');
+    }
+
+    public function schedule_pupdate($id, Request $request){
+        $this->validate($request, [
+            'name' => 'required|string'
+        ]);
+
+        $update = Menu::findOrFail($id)->update([
+            'name' => $request->name,
+            'url' => $request->url,
+            'parent' => $request->parent
+        ]);
+
+        return redirect('admin/schedule')->with('message', 'Jadwal berhasil diubah');
+    }
+
+    public function schedule_destroy($id){
+        Schedule::findOrFail($id)->delete();
+        return redirect('admin/schedule')->with('message', 'Jadwal berhasil dihapus');
     }
 
     public function logout(){

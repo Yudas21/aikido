@@ -6,6 +6,9 @@ use Illuminate\Support\Facades\Auth;
 use App\User;
 use App\Menu;
 use App\Akses;
+use App\Level;
+use App\Page;
+use App\News;
  
 class Indras {
 
@@ -61,4 +64,38 @@ class Indras {
         }
         return $parent;
     }
+
+    public static function get_level_name($id) {
+        $name = '';
+        $menus = Level::select('name')->where('id', $id)->get();
+        if(Level::select('name')->where('id', $id)->count() > 0){
+            foreach ($menus as $value) {
+                $name = $value->name;
+            }
+        }
+        return $name;
+    }
+
+    public static function get_page_image($id){
+        $name = '';
+        $menus = Page::select('page_image')->where('id', $id)->get();
+        if(Page::select('page_image')->where('id', $id)->count() > 0){
+            foreach ($menus as $value) {
+                $name = $value->page_image;
+            }
+        }
+        return $name;
+    }
+
+    public static function get_news_image($id){
+        $name = '';
+        $menus = News::select('news_image')->where('id', $id)->get();
+        if(News::select('news_image')->where('id', $id)->count() > 0){
+            foreach ($menus as $value) {
+                $name = $value->news_image;
+            }
+        }
+        return $name;
+    }
+
 }
