@@ -115,7 +115,7 @@ class AdminController extends Controller
 
     public function menu_update($id){
         $data = Menu::all();
-        $menu = Menu::findOrFail($id)->first();
+        $menu = Menu::where('id',$id)->first();
         return view('admin.menu_update', compact('data','menu'));
     }
 
@@ -167,26 +167,32 @@ class AdminController extends Controller
         return redirect('admin/level')->with('message', 'Level berhasil ditambah!');
     }
 
-    public function level_update($id, Request $request){
+    public function level_update($id){
+        $level = Level::where('id',$id)->first();
+        return view('admin.level_update', compact('level'));
+        // return $data;
+    }
+
+    public function level_pupdate($id, Request $request){
         
         $this->validate($request, [
-            'name' => $request->deskripsi == $request->deskripsiold ? 'required' : 'required|unique:level,name' 
+            'name' => $request->name_old == $request->name ? 'required' : 'required|unique:level,name' 
         ]);
 
         Level::where('id', $id)->update([
-            'name' => $request->deskripsi
+            'name' => $request->name
         ]);
 
-        return redirect('admin/level/'.$id)->with('message', 'Level berhasil diubah!');
+        return redirect('admin/level')->with('message', 'Level berhasil diubah!');
     }
 
     public function level_destroy($id){
         $delete = Level::findOrFail($id)->delete();
-        return redirect('admin/level/'.$id)->with('message', 'Level berhasil dihapus!');
+        return redirect('admin/level')->with('message', 'Level berhasil dihapus!');
     }
 
     public function level_access($id){
-        $access = DB::table('akses')->where('level_id', $id)->get();
+        $access = Akses::where('level_id', $id)->get();
         return view('admin.level_access', compact('access','id'));
     }
 

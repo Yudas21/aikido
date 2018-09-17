@@ -40,11 +40,11 @@
                                 {{csrf_field()}}
                               <input name="_method" type="hidden" value="PATCH">
                               <div class="form-group">
-                                  <label for="name" class="col-sm-2 control-label">Name</label>
+                                  <label for="name" class="col-sm-2 control-label">Nama Menu</label>
                                   <div class="col-sm-10">
                                       <input type="text" class="form-control" name="name" value="{{ $menu->name }}">
                                       @if ($errors->has('name'))
-                                        <span class="help-block">{{ $errors->first('name') }}</span>
+                                        <span class="help-block text-danger">{{ $errors->first('name') }}</span>
                                       @endif
                                    </div>
                               </div>

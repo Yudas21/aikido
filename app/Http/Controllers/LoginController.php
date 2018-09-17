@@ -18,7 +18,7 @@ class LoginController extends Controller
            'password' => 'required'
       ]);
       if($request->email == '' || $request->password == ''){
-        return redirect('')->with('message','Email atau Password salah tidak boleh kosong!');
+        return redirect('login')->with('message','Email atau Password salah tidak boleh kosong!');
       } else {
         if(Auth::attempt(['email' => $request->email,'password' => $request->password])){
           $user_data = User::where('email', $request->email)->first();
@@ -27,7 +27,7 @@ class LoginController extends Controller
           $level = $user_data->level; 
           $status = $user_data->status;
           if($status == 0){
-            return redirect('')->with('message','Akun anda tidak aktif, silakan hubungi Administrator!');
+            return redirect('login')->with('message','Akun anda tidak aktif, silakan hubungi Administrator!');
           } else {
             $data = array(
                           'name' => $name,
@@ -41,7 +41,7 @@ class LoginController extends Controller
           }
           
         } else {
-          return redirect('')->with('message','Email atau Password salah!');
+          return redirect('login')->with('message','Email atau Password salah!');
         }  
       }
       

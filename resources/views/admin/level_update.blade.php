@@ -11,7 +11,7 @@
                     <ol class="breadcrumb float-sm-right">
                       <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
                       <li class="breadcrumb-item"><a href="#">User Management</a></li>
-                      <li class="breadcrumb-item active">Menu</li>
+                      <li class="breadcrumb-item active">Level</li>
                     </ol>
                   </div>
                 </div>
@@ -24,7 +24,7 @@
               <!-- Default box -->
               <div class="card">
                 <div class="card-header">
-                  <h3 class="card-title">Form Tambah Menu</h3>
+                  <h3 class="card-title">Form Update Level</h3>
 
                   <div class="card-tools">
                     <button type="button" class="btn btn-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
@@ -36,45 +36,18 @@
                 <div class="card-body">
                      <div class="row">
                         <div class="col-sm-12">  
-                              <form action="{{ url('admin/padd_menu') }}" method="post" class="form-horizontal">
-                              {{csrf_field()}}
+                              <form action="{{ url('admin/pupdate_level/'.$level->id) }}" method="post" class="form-horizontal">
+                                {{csrf_field()}}
+                              <input name="_method" type="hidden" value="PATCH">
                               <div class="form-group">
-                                  <label for="name" class="col-sm-2 control-label">Nama Menu</label>
+                                  <label for="name" class="col-sm-2 control-label">Nama Level</label>
                                   <div class="col-sm-10">
-                                      <input type="text" class="form-control" name="name" value="{{ old('name') }}">
+                                      <input type="text" class="form-control" name="name" value="{{ $level->name }}">
+                                      <input type="hidden" class="form-control" name="name_old" value="{{ $level->name }}">
                                       @if ($errors->has('name'))
                                         <span class="help-block text-danger">{{ $errors->first('name') }}</span>
                                       @endif
                                    </div>
-                              </div>
-                              <div class="form-group">
-                                  <label for="icon" class="col-sm-2 control-label">Icon</label>
-                                  <div class="col-sm-10">
-                                    <input type="text" class="form-control" name="icon" value="{{ old('icon') }}">
-                                    @if ($errors->has('icon'))
-                                        <span class="help-block text-danger">{{ $errors->first('icon') }}</span>
-                                    @endif
-                                  </div>
-                              </div>
-                              <div class="form-group">
-                                  <label for="url" class="col-sm-2 control-label">Url</label>
-                                  <div class="col-sm-10">
-                                    <input type="text" class="form-control" name="url" value="{{ old('url') }}">
-                                    @if ($errors->has('url'))
-                                       <span class="help-block text-danger">{{ $errors->first('url') }}</span>
-                                    @endif
-                                  </div>
-                              </div>
-                              <div class="form-group">
-                                  <label for="name" class="col-sm-2 control-label">Parent</label>
-                                  <div class="col-sm-4">
-                                     <select class="form-control" name="parent">
-                                        <option value="0">as Parent</option>
-                                        @foreach ($menu as $d_menu) 
-                                          <option value="{{ $d_menu->id }}">{{ $d_menu->name }}</option>
-                                        @endforeach
-                                     </select>
-                                  </div>
                               </div>
                               <div class="row xs-pt-15">
                                   <div class="col-xs-6">
@@ -83,7 +56,7 @@
                                   <div class="col-xs-6">
                                     <p class="text-right">
                                       <button type="submit" class="btn btn-space btn-primary">Simpan</button>
-                                      <a href="{{ url('admin/menu') }}" class="btn btn-space btn-success">Kembali</a>
+                                      <a href="{{ url('admin/level') }}" class="btn btn-space btn-success">Kembali</a>
                                     </p>
                                   </div>
                                 </div>

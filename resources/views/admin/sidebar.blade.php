@@ -5,7 +5,7 @@
       <!-- <img src="{{ asset('logo.png') }}"
            alt="BRI - Money Changer Logo"
            class="brand-image img-fluid"> -->
-      <span class="brand-text">Perguruan Aikido BAF Dojo</span>
+      <span class="brand-text">Admin Dashboard</span>
     </a>
 
     <!-- Sidebar -->

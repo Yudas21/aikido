@@ -45,4 +45,14 @@ Route::get('admin/add_menu', 'AdminController@menu_add');
 Route::post('admin/padd_menu', 'AdminController@menu_store');
 Route::get('admin/update_menu/{menu}', 'AdminController@menu_update');
 Route::patch('admin/pupdate_menu/{menu}', 'AdminController@menu_pupdate');
+Route::post('admin/delete_menu/{menu}', 'AdminController@menu_destroy');
+
+Route::get('admin/level', 'AdminController@level');
+Route::get('admin/add_level', 'AdminController@level_add');
+Route::post('admin/padd_level', 'AdminController@level_store');
+Route::get('admin/update_level/{level}', 'AdminController@level_update');
+Route::patch('admin/pupdate_level/{level}', 'AdminController@level_pupdate');
+Route::post('admin/delete_level/{level}', 'AdminController@level_destroy');
+Route::get('admin/access_level/{level}', 'AdminController@level_access');
+Route::post('admin/update_access_level/{level}', 'AdminController@level_access_update');
 
