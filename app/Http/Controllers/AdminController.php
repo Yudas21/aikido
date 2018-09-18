@@ -15,6 +15,9 @@ use Indras;
 use App\User;
 use App\Page;
 use App\News;
+use App\Schedule;
+use App\ImageGallery;
+use App\VideoGallery;
 
 class AdminController extends Controller
 {
@@ -485,12 +488,13 @@ class AdminController extends Controller
         $uploadedFile = $request->file('news_image'); 
         $path = $uploadedFile->store('public/news');
         $pecah = explode('/', $path);
-
+        // return $pecah;
+        // exit();
         if($file != '' || $file != NULL){
             unlink(storage_path('app/public/news/'.$file));
         }
         
-        Page::findOrFail($id)->update([
+        News::findOrFail($id)->update([
             'news_image' => trim($pecah[2]),
             'updated_at' => date('Y-m-d H:i:s')
         ]);
@@ -519,13 +523,15 @@ class AdminController extends Controller
 
     public function schedule_store(Request $request){
         $this->validate($request, [
-            'name' => 'required|string'
+            'from_day' => 'required',
+            'from_time' => 'required',
+            'to_time' => 'required'
         ]);
 
-        $create = Menu::create([
-            'name' => $request->name,
-            'url' => $request->url,
-            'parent' => $request->parent
+        $create = Schedule::create([
+            'from_day' => $request->from_day,
+            'from_time' => $request->from_time,
+            'to_time' => $request->to_time
         ]);
         
         return redirect('admin/schedule')->with('message', 'Jadwal baru berhasil disimpan');
@@ -533,13 +539,15 @@ class AdminController extends Controller
 
     public function schedule_pupdate($id, Request $request){
         $this->validate($request, [
-            'name' => 'required|string'
+            'from_day' => 'required',
+            'from_time' => 'required',
+            'to_time' => 'required'
         ]);
 
-        $update = Menu::findOrFail($id)->update([
-            'name' => $request->name,
-            'url' => $request->url,
-            'parent' => $request->parent
+        $update = Schedule::findOrFail($id)->update([
+            'from_day' => $request->from_day,
+            'from_time' => $request->from_time,
+            'to_time' => $request->to_time
         ]);
 
         return redirect('admin/schedule')->with('message', 'Jadwal berhasil diubah');
@@ -548,6 +556,172 @@ class AdminController extends Controller
     public function schedule_destroy($id){
         Schedule::findOrFail($id)->delete();
         return redirect('admin/schedule')->with('message', 'Jadwal berhasil dihapus');
+    }
+
+    public function gallery_image(){
+        $data = ImageGallery::all();
+        return view('admin.gallery_image', compact('data'));
+    }
+
+    public function gallery_image_add(){
+        return view('admin.gallery_image_add');
+    }
+
+    public function gallery_image_store(Request $request){
+        $this->validate($request, [
+            'image_title' => 'required',
+            'image_path' => 'required|file|max:5000',
+            'publish' => 'required'
+        ]);
+
+        $uploadedFile = $request->file('image_path'); 
+        $path = $uploadedFile->store('public/foto');
+        $pecah = explode('/', $path);
+
+        ImageGallery::create([
+                       'image_title' => $request->image_title,
+                       'image_path' => $pecah[2],
+                       'publish' => $request->publish
+        ]);
+        
+        return redirect('admin/image_gallery')->with('message', 'Foto baru berhasil ditambah!');
+    }
+
+    public function gallery_image_update($id){
+        $data = ImageGallery::where('id',$id)->first();
+        return view('admin.gallery_image_update', compact('data'));
+        // return $data;
+    }
+
+    public function gallery_image_pupdate($id, Request $request){
+        
+        $this->validate($request, [
+            'image_title' => 'required',
+            'image_path' => 'file|max:5000',
+            'publish' => 'required' 
+        ]);
+
+        $file = Indras::get_gallery_image($id);
+        $uploadedFile = $request->file('image_path');
+        if($uploadedFile!=''){
+            $path = $uploadedFile->store('public/foto');
+            $pecah = explode('/', $path);
+            // return $pecah;
+            // exit();
+            if($file != '' || $file != NULL){
+                unlink(storage_path('app/public/foto/'.$file));
+            }
+
+            ImageGallery::findOrFail($id)->update([
+                'image_title' => $request->image_title,
+                'image_path' => $pecah[2],
+                'publish' => $request->publish
+            ]);
+        } else {
+            ImageGallery::findOrFail($id)->update([
+                'image_title' => $request->image_title,
+                'publish' => $request->publish
+            ]);
+        }
+        
+        return redirect('admin/image_gallery')->with('message', 'Foto berhasil diubah!');
+    }
+
+    public function gallery_image_destroy($id){
+        $file = Indras::get_gallery_image($id);
+        if($file != '' || $file != NULL){
+            unlink(storage_path('app/public/foto/'.$file));
+        }
+        ImageGallery::findOrFail($id)->delete();
+        return redirect('admin/image_gallery')->with('message', 'Foto berhasil dihapus!');
+    }
+
+    public function gallery_video(){
+        $data = VideoGallery::all();
+        return view('admin.gallery_video', compact('data'));
+    }
+
+    public function gallery_video_add(){
+        return view('admin.gallery_video_add');
+    }
+
+    public function gallery_video_store(Request $request){
+        $this->validate($request, [
+            'video_title' => 'required',
+            'video_path' => 'file|max:50000',
+            'publish' => 'required'
+        ]);
+
+        $uploadedFile = $request->file('video_path'); 
+        if($uploadedFile!=''){
+            $path = $uploadedFile->store('public/video');
+            $pecah = explode('/', $path);
+
+            VideoGallery::create([
+                           'video_title' => $request->video_title,
+                           'video_path' => $pecah[2],
+                           'video_url' => $request->video_url != '' ? $request->video_url : NULL,
+                           'publish' => $request->publish
+            ]);
+        } else {
+            VideoGallery::create([
+                           'video_title' => $request->video_title,
+                           'video_url' => $request->video_url != '' ? $request->video_url : NULL,
+                           'publish' => $request->publish
+            ]);
+        }
+        
+        
+        return redirect('admin/video_gallery')->with('message', 'Foto baru berhasil ditambah!');
+    }
+
+    public function gallery_video_update($id){
+        $data = VideoGallery::where('id',$id)->first();
+        return view('admin.gallery_video_update', compact('data'));
+        // return $data;
+    }
+
+    public function gallery_video_pupdate($id, Request $request){
+        
+        $this->validate($request, [
+            'video_title' => 'required',
+            'video_path' => 'file|max:50000',
+            'publish' => 'required' 
+        ]);
+
+        $file = Indras::get_gallery_video($id);
+        $uploadedFile = $request->file('video_path'); 
+        
+        if($uploadedFile!=''){
+            $path = $uploadedFile->store('public/video');
+            $pecah = explode('/', $path);
+            VideoGallery::findOrFail($id)->update([
+                'video_title' => $request->video_title,
+                'video_path' => $pecah[2],
+                'video_url' => $request->video_url == '' ? NULL : $request->video_url,
+                'publish' => $request->publish
+            ]);
+            if($file != '' || $file != NULL){
+                unlink(storage_path('app/public/video/'.$file));
+            }
+        } else {
+            VideoGallery::findOrFail($id)->update([
+                'video_title' => $request->video_title,
+                'video_url' => $request->video_url == '' ? NULL : $request->video_url,
+                'publish' => $request->publish
+            ]);
+        }
+
+        return redirect('admin/video_gallery')->with('message', 'Video berhasil diubah!');
+    }
+
+    public function gallery_video_destroy($id){
+        $file = Indras::get_gallery_video($id);
+        if($file != '' || $file != NULL){
+            unlink(storage_path('app/public/video/'.$file));
+        }
+        VideoGallery::findOrFail($id)->delete();
+        return redirect('admin/video_gallery')->with('message', 'Video berhasil dihapus!');
     }
 
     public function logout(){

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 17, 2018 at 11:09 AM
+-- Generation Time: Sep 18, 2018 at 10:58 AM
 -- Server version: 10.1.34-MariaDB
 -- PHP Version: 7.0.31
 
@@ -66,7 +66,7 @@ INSERT INTO `akses` (`id`, `menu_id`, `level_id`, `created_at`, `updated_at`) VA
 CREATE TABLE `image_gallery` (
   `id` int(10) UNSIGNED NOT NULL,
   `image_title` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `image_path` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `image_path` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   `publish` enum('0','1') COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -126,7 +126,7 @@ INSERT INTO `menu` (`id`, `name`, `icon`, `url`, `parent`, `no_urut`, `created_a
 (6, 'Website Management', 'fa fa-globe', NULL, 0, NULL, '2018-09-17 01:22:12', '2018-09-17 01:22:12', NULL),
 (7, 'Pages', NULL, 'admin/pages', 6, NULL, '2018-09-17 01:23:21', '2018-09-17 01:23:21', NULL),
 (8, 'Berita', NULL, 'admin/news', 6, NULL, '2018-09-17 01:23:41', '2018-09-17 01:24:33', NULL),
-(9, 'Galeri Foto', NULL, 'admin/foto_gallery', 6, NULL, '2018-09-17 01:24:22', '2018-09-17 01:25:05', NULL),
+(9, 'Galeri Foto', NULL, 'admin/image_gallery', 6, NULL, '2018-09-17 01:24:22', '2018-09-18 04:03:18', NULL),
 (10, 'Galeri Video', NULL, 'admin/video_gallery', 6, NULL, '2018-09-17 01:24:55', '2018-09-17 01:24:55', NULL),
 (11, 'Jadwal', NULL, 'admin/schedule', 6, NULL, '2018-09-17 01:25:30', '2018-09-17 01:25:30', NULL);
 
@@ -181,7 +181,7 @@ CREATE TABLE `news` (
 --
 
 INSERT INTO `news` (`id`, `news_title`, `news_content`, `news_image`, `news_publish`, `news_slug`, `created_by`, `updated_by`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 'Lorem Ipsum', '<p>\r\n<strong></strong>Lorem Ipsum<strong></strong> is simply dummy text of the printing and \r\ntypesetting industry. Lorem Ipsum has been the industry\'s standard dummy\r\n text ever since the 1500s, when an unknown printer took a galley of \r\ntype and scrambled it to make a type specimen book. It has survived not \r\nonly five centuries, but also the leap into electronic typesetting, \r\nremaining essentially unchanged. It was popularised in the 1960s with \r\nthe release of Letraset sheets containing Lorem Ipsum passages, and more\r\n recently with desktop publishing software like Aldus PageMaker \r\nincluding versions of Lorem Ipsum.\r\n\r\n<br></p>', NULL, '1', 'lorem-ipsum', 2, 2, '2018-09-17 08:38:41', '2018-09-17 08:46:43', NULL);
+(1, 'Lorem Ipsum', '<p style=\"text-align: justify;\"><strong>Lorem Ipsum</strong> is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry&#39;s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>', 'QiUCoPQFiJ6kPAxAtHqpWQCQYX7ZBbu9cmuH9Tji.jpeg', '1', 'lorem-ipsum', 2, 2, '2018-09-17 08:38:41', '2018-09-18 02:50:06', NULL);
 
 -- --------------------------------------------------------
 
@@ -204,7 +204,7 @@ CREATE TABLE `page` (
 --
 
 INSERT INTO `page` (`id`, `name`, `page_image`, `page_content`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 'Tentang Kami', 'xpo5jbltrM85BsYBsNERs0OBiW6Br7PxSzwm67M3.png', '<p>\r\n\r\n<strong>Lorem Ipsum </strong>\r\nis simply dummy text of the printing and typesetting industry. Lorem \r\nIpsum has been the industry\'s standard dummy text ever since the 1500s, \r\nwhen an unknown printer took a galley of type and scrambled it to make a\r\n type specimen book. It has survived not only five centuries, but also \r\nthe leap into electronic typesetting, remaining essentially unchanged. \r\nIt was popularised in the 1960s with the release of Letraset sheets \r\ncontaining Lorem Ipsum passages, and more recently with desktop \r\npublishing software like Aldus PageMaker including versions of Lorem \r\nIpsum.\r\n\r\n\r\n\r\n<strong></strong><br></p>', '2018-09-17 04:17:12', '2018-09-17 06:51:41', NULL);
+(1, 'Tentang Kami', 'xpo5jbltrM85BsYBsNERs0OBiW6Br7PxSzwm67M3.png', '<p style=\"text-align: justify;\"><strong>Lorem Ipsum&nbsp;</strong> is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry&#39;s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>', '2018-09-17 04:17:12', '2018-09-18 03:01:35', NULL);
 
 -- --------------------------------------------------------
 
@@ -226,13 +226,20 @@ CREATE TABLE `password_resets` (
 
 CREATE TABLE `schedule` (
   `id` tinyint(4) UNSIGNED NOT NULL,
-  `from_day` char(1) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `to_day` char(1) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `from_day` char(6) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `from_time` char(5) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `to_time` char(5) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `schedule`
+--
+
+INSERT INTO `schedule` (`id`, `from_day`, `from_time`, `to_time`, `created_at`, `updated_at`) VALUES
+(1, 'Sabtu', '10:00', '12:00', '2018-09-17 23:32:21', '2018-09-17 23:42:51'),
+(2, 'Minggu', '16:30', '18:00', '2018-09-17 23:41:50', '2018-09-17 23:41:50');
 
 -- --------------------------------------------------------
 
@@ -258,8 +265,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `password`, `level`, `status`, `remember_token`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 'Admin', 'admin@aikido.co.id', '$2y$10$4WcSNaS1gGxat3yTnLXpM.rrvkGRnIwiMzaiSIga6SYwy1ca9zePm', 1, '1', 'hFYKMbfIoJVfFL3vysmpJZAVTxUeT0snbPhYiaEB89iADIfUwZrxtX3yI47k', '2018-09-13 03:09:25', '2018-09-13 03:09:25', NULL),
-(2, 'Admin Web', 'adminweb@aikido.co.id', '$2y$10$owdNlyAVsNF2O29heLTvL.z7mpA8AotzByNsxtF5hKCirOLXXAt/K', 2, '1', 'O1hqlU7HXQJMZh8VMAZfHyGw2m0VnwPwVPnvNoeA01I7EGdA0uORdFWrlfay', '2018-09-17 02:20:15', '2018-09-17 02:32:10', NULL);
+(1, 'Admin', 'admin@aikido.co.id', '$2y$10$4WcSNaS1gGxat3yTnLXpM.rrvkGRnIwiMzaiSIga6SYwy1ca9zePm', 1, '1', 'xSLsNtAMWg4xJQxAuVn85ULj2QwAeD047MbfLCzdLxGnXx4fsNLB2ibkewOF', '2018-09-13 03:09:25', '2018-09-13 03:09:25', NULL),
+(2, 'Admin Web', 'adminweb@aikido.co.id', '$2y$10$owdNlyAVsNF2O29heLTvL.z7mpA8AotzByNsxtF5hKCirOLXXAt/K', 2, '1', 'xQvJWc1BMxOcFXklwaWk9jgGc5kpemNODWpogR9RuYCGGHZL9li0a0jA1APR', '2018-09-17 02:20:15', '2018-09-17 02:32:10', NULL);
 
 -- --------------------------------------------------------
 
@@ -270,7 +277,8 @@ INSERT INTO `users` (`id`, `name`, `email`, `password`, `level`, `status`, `reme
 CREATE TABLE `video_gallery` (
   `id` int(10) UNSIGNED NOT NULL,
   `video_title` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `video_path` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `video_path` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `video_url` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `publish` enum('0','1') COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -398,7 +406,7 @@ ALTER TABLE `page`
 -- AUTO_INCREMENT for table `schedule`
 --
 ALTER TABLE `schedule`
-  MODIFY `id` tinyint(4) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` tinyint(4) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `users`

@@ -19,7 +19,7 @@
 
 // Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/', function () {
-    return redirect(url(''));
+    return redirect(url('/'));
 });
 Route::get('/', 'HomeController@index');
 Route::get('about', 'AboutController@index');
@@ -86,4 +86,28 @@ Route::patch('admin/pupdate_news/{news}', 'AdminController@news_pupdate');
 Route::delete('admin/delete_news/{news}', 'AdminController@news_destroy');
 Route::get('admin/upload_news/{news}', 'AdminController@news_upload');
 Route::patch('admin/pupload_news/{pages}', 'AdminController@news_pupload');
+
+// CRUD Schedule
+Route::get('admin/schedule', 'AdminController@schedule');
+Route::get('admin/add_schedule', 'AdminController@schedule_add');
+Route::post('admin/padd_schedule', 'AdminController@schedule_store');
+Route::get('admin/update_schedule/{schedule}', 'AdminController@schedule_update');
+Route::patch('admin/pupdate_schedule/{schedule}', 'AdminController@schedule_pupdate');
+Route::delete('admin/delete_schedule/{schedule}', 'AdminController@schedule_destroy');
+
+// CRUD Image Gallery
+Route::get('admin/image_gallery', 'AdminController@gallery_image');
+Route::get('admin/add_image_gallery', 'AdminController@gallery_image_add');
+Route::post('admin/padd_image_gallery', 'AdminController@gallery_image_store');
+Route::get('admin/update_image_gallery/{image}', 'AdminController@gallery_image_update');
+Route::patch('admin/pupdate_image_gallery/{image}', 'AdminController@gallery_image_pupdate');
+Route::delete('admin/delete_image_gallery/{image}', 'AdminController@gallery_image_destroy');
+
+// CRUD Video Gallery
+Route::get('admin/video_gallery', 'AdminController@gallery_video');
+Route::get('admin/add_video_gallery', 'AdminController@gallery_video_add');
+Route::post('admin/padd_video_gallery', 'AdminController@gallery_video_store');
+Route::get('admin/update_video_gallery/{video}', 'AdminController@gallery_video_update');
+Route::patch('admin/pupdate_video_gallery/{video}', 'AdminController@gallery_video_pupdate');
+Route::delete('admin/delete_video_gallery/{video}', 'AdminController@gallery_video_destroy');
 

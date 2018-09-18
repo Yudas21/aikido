@@ -9,6 +9,8 @@ use App\Akses;
 use App\Level;
 use App\Page;
 use App\News;
+use App\ImageGallery;
+use App\VideoGallery;
  
 class Indras {
 
@@ -93,6 +95,28 @@ class Indras {
         if(News::select('news_image')->where('id', $id)->count() > 0){
             foreach ($menus as $value) {
                 $name = $value->news_image;
+            }
+        }
+        return $name;
+    }
+
+    public static function get_gallery_image($id){
+        $name = '';
+        $menus = ImageGallery::select('image_path')->where('id', $id)->get();
+        if(ImageGallery::select('image_path')->where('id', $id)->count() > 0){
+            foreach ($menus as $value) {
+                $name = $value->image_path;
+            }
+        }
+        return $name;
+    }
+
+    public static function get_gallery_video($id){
+        $name = '';
+        $menus = VideoGallery::select('video_path')->where('id', $id)->get();
+        if(VideoGallery::select('video_path')->where('id', $id)->count() > 0){
+            foreach ($menus as $value) {
+                $name = $value->video_path;
             }
         }
         return $name;

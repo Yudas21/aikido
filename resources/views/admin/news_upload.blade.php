@@ -42,7 +42,7 @@
                               <div class="form-group">
                                 <div class="col-sm-4">
                                   @if($data->news_image!='' || $data->news_image!= NULL)
-                                      <img src="{{ url('/storage/news/'.$data->news_image) }}">
+                                      <img src="{{ url('/storage/news/'.$data->news_image) }}" class="img-fluid">
                                   @endif
                                 </div>
                               </div>

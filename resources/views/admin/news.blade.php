@@ -107,7 +107,7 @@
                                     <div class="modal-body">
                                         <div class="row">
                                           @if($value->news_image!='' || $value->news_image!= NULL)
-                                              <img src="{{ url('/storage/news/'.$value->news_image) }}">
+                                              <img src="{{ url('/storage/news/'.$value->news_image) }}" class="img-fluid">
                                           @endif
                                           <?php echo $value->news_content;?>
                                         </div>
