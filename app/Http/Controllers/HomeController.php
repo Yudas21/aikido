@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\News;
+use App\ImageGallery;
 
 class HomeController extends Controller
 {
@@ -23,6 +25,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('front.home');
+        $latest_news = News::where('news_publish', 1)->orderBy('created_at', 'desc')->limit(3)->get();
+        $latest_foto = ImageGallery::orderBy('created_at', 'desc')->limit(3)->get();
+        return view('front.home', compact('latest_news', 'latest_foto'));
     }
 }

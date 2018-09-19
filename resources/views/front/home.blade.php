@@ -97,28 +97,41 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         <div class="container">
                         <h2>Selamat Datang</h2>
                             <span></span>
+                            
                             <div class="welcome-grids">
-                                <div class="col-md-4 welcome-grid">
-                                    <img src="front/images/welcome/1.jpg" class="img-responsive" alt=""/>
-                                    <div class="wel-bottom  hvr-bounce-to-bottom">
-                                        <h4>Lorem Ipsum</h4>
-                                        <p>Fusce euismod consequat ante. Lorem ipsum dolor sit amet, cosectetuer adipiscing elit. Pellentesque sed dolor. Aliquam congue fermentum nisl. </p>
+                                @if(count($latest_foto) > 0)
+                                    @foreach($latest_foto as $dlf)
+                                        <div class="col-md-4 welcome-grid">
+                                            <img src="{{ url('/storage/foto/'.$dlf->image_path) }}" width="300" height="300" alt=""/>
+                                            <div class="wel-bottom hvr-bounce-to-bottom" style="width:300px;">
+                                                <h4>{{ $dlf->image_title }}</h4>
+                                                <p>{{ $dlf->image_title }}</p>
+                                            </div>
+                                        </div>   
+                                    @endforeach
+                                @else
+                                    <div class="col-md-4 welcome-grid">
+                                        <img src="front/images/welcome/1.jpg" class="img-responsive" alt=""/>
+                                        <div class="wel-bottom  hvr-bounce-to-bottom">
+                                            <h4>Lorem Ipsum</h4>
+                                            <p>Fusce euismod consequat ante. Lorem ipsum dolor sit amet, cosectetuer adipiscing elit. Pellentesque sed dolor. Aliquam congue fermentum nisl. </p>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-md-4 welcome-grid">
-                                    <img src="front/images/welcome/2.jpg" class="img-responsive" alt=""/>
-                                    <div class="wel-bottom hvr-bounce-to-bottom">
-                                        <h4>Lorem Ipsum</h4>
-                                        <p>Fusce euismod consequat ante. Lorem ipsum dolor sit amet, cosectetuer adipiscing elit. Pellentesque sed dolor. Aliquam congue fermentum nisl. </p>
+                                    <div class="col-md-4 welcome-grid">
+                                        <img src="front/images/welcome/2.jpg" class="img-responsive" alt=""/>
+                                        <div class="wel-bottom hvr-bounce-to-bottom">
+                                            <h4>Lorem Ipsum</h4>
+                                            <p>Fusce euismod consequat ante. Lorem ipsum dolor sit amet, cosectetuer adipiscing elit. Pellentesque sed dolor. Aliquam congue fermentum nisl. </p>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-md-4 welcome-grid">
-                                    <img src="front/images/welcome/3.jpg" class="img-responsive" alt=""/>
-                                    <div class="wel-bottom hvr-bounce-to-bottom">
-                                        <h4>Lorem Ipsum</h4>
-                                        <p>Fusce euismod consequat ante. Lorem ipsum dolor sit amet, cosectetuer adipiscing elit. Pellentesque sed dolor. Aliquam congue fermentum nisl.  </p>
+                                    <div class="col-md-4 welcome-grid">
+                                        <img src="front/images/welcome/3.jpg" class="img-responsive" alt=""/>
+                                        <div class="wel-bottom hvr-bounce-to-bottom">
+                                            <h4>Lorem Ipsum</h4>
+                                            <p>Fusce euismod consequat ante. Lorem ipsum dolor sit amet, cosectetuer adipiscing elit. Pellentesque sed dolor. Aliquam congue fermentum nisl.  </p>
+                                        </div>
                                     </div>
-                                </div>
+                                @endif
                                 <div class="clearfix"></div>
                             </div>
                         </div>
@@ -127,7 +140,22 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     <div class="news-section">
                         <div class="container">
                             <h3>Berita Terbaru</h3>
-                            <span></span>
+                            <span style="color: blue;"></span>
+                            @if(count($latest_news) > 0)
+                              @foreach($latest_news as $dln)
+                                <div class="news-grids">
+                                    <div class="col-md-4 new-grid">
+                                        <a href="#" class="mask"><img src="{{ url('/storage/news/'.$dln->news_image) }}" class="img-responsive zoom-img" alt=""/></a>
+                                    </div>
+                                    <div class="col-md-8 new-grid1 hvr-bounce-to-right">
+                                        <div style="color:#555;"><i class="glyphicon glyphicon-calendar"></i> {{ date('d F Y | H:i', strtotime($dln->created_at)) }} <i class="glyphicon glyphicon-user"></i></div>
+                                        <h4><a href="#">{{ $dln->news_title }}</a></h4>
+                                        <?php echo $dln->news_content; ?>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                              @endforeach
+                            @else
                             <div class="news-grids">
                                 <div class="col-md-4 new-grid">
                                     <a href="events.html" class="mask"><img src="front/images/welcome/1.jpg" class="img-responsive zoom-img" alt=""/></a>
@@ -161,6 +189,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                 </div>
                                 <div class="clearfix"></div>
                             </div>
+                            @endif
                         </div>
                     </div>
                     <!-- <div class="partner">

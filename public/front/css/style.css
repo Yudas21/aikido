@@ -201,7 +201,7 @@ body{
   left: 0;
   right: 0;
   bottom: 0;
-  background: #93DA8D;
+  background: #6495ED;;
   -webkit-transform: scaleY(0);
   transform: scaleY(0);
   -webkit-transform-origin: 50% 0;
@@ -315,20 +315,20 @@ div#owl-demo {
     width: 17%;
     height: 3px;
     display: block;
-    background: #93DA8D;
+    background: #6495ED;
     margin-top: .5em;
 }
 .new-grid {
-    border-right: 2px solid#93DA8D;
+    border-right: 2px solid#6495ED;
 }
 .news-grids {
     margin-top: 3em;
 }
 .new-grid1 i {
     font-size: 1.2em;
-    color: #93DA8D;
-    margin-right: 2em;
-    vertical-align: middle;
+    color: #6495ED;
+    /*margin-right: 2em;
+    vertical-align: middle;*/
 }
 .new-grid1 h5 {
     font-size: 1.1em;

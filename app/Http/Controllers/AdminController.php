@@ -35,28 +35,23 @@ class AdminController extends Controller
     }
 
     public function profile(){
-        $profile = User::where('id', session('uid'))->first();
-        return view('admin.profile', compact('profile'));
-    }
-
-    public function settings(){
-        $id = session('uid');
-        $settings = User::where('id', $id)->get();
-        return view('admin.settings', compact('settings'));
+        $data = User::where('id', session('uid'))->first();
+        return view('admin.profile', compact('data'));
     }
 
     public function profile_update($id, Request $request){
         $this->validate($request, [
-            'name' => 'required|string'
+            'name' => 'required|string',
+            'email' => $request->email == $request->email ? 'required' : 'required|unique:users,email'
         ]);
 
-        User::where('id_user', $id)->update([
+        User::findOrFail($id)->update([
             'name' => $request->name,
-            'updated_at' => date('Y-m-d H:i:s')
+            'email' => $request->email
         ]);
 
         session(['name' => $request->name]);
-
+        session(['email' => $request->email]);
         return redirect('admin/profile')->with('message', 'Update profil berhasil!');
     }
 
@@ -67,7 +62,7 @@ class AdminController extends Controller
             'confirm_password' => 'required|same:password'
         ]);
 
-        if($request->current_password != session('password')) {
+        if($request->current_password != session('password')){
            return redirect()->back()->with('error','Password sekarang salah. Silakan coba lagi!');
         }
 
@@ -75,9 +70,8 @@ class AdminController extends Controller
            return redirect()->back()->with('error','Password baru sama seperti password sekarang. Silakan coba lagi dengan password yang berbeda.');
         } 
 
-        User::where('id_user', $id)->update([
-                'password' => Hash::make($request->password),
-                'updated_at' => date('Y-m-d H:i:s')
+        User::findOrFail($id)->update([
+                'password' => Hash::make($request->password)
         ]);
 
         session(['password' => $request->password]);
