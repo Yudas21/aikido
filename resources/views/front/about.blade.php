@@ -23,6 +23,27 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <!---fonts-->
 <link href='//fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic' rel='stylesheet' type='text/css'>
 <link href='//fonts.googleapis.com/css?family=Contrail+One' rel='stylesheet' type='text/css'>
+<style type="text/css">
+	#myBtn {
+	    display: none; /* Hidden by default */
+	    position: fixed; /* Fixed/sticky position */
+	    bottom: 20px; /* Place the button at the bottom of the page */
+	    right: 30px; /* Place the button 30px from the right */
+	    z-index: 99; /* Make sure it does not overlap */
+	    border: none; /* Remove borders */
+	    outline: none; /* Remove outline */
+	    background-color: #6495ED; /* Set a background color */
+	    color: white; /* Text color */
+	    cursor: pointer; /* Add a mouse pointer on hover */
+	    padding: 15px; /* Some padding */
+	    border-radius: 10px; /* Rounded corners */
+	    font-size: 18px; /* Increase font size */
+	}
+
+	#myBtn:hover {
+	    background-color: #555; /* Add a dark-grey background on hover */
+	}
+</style>
 <!---fonts-->
 </head>
 <body>
@@ -80,13 +101,14 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 							<div class="container">
 								<div class="about-grids">
 									<div class="col-md-4 about-grid">
-										<img src="front/images/aikido.jpg" class="img-responsive" alt=""/>
+										@if($about->page_image != '' || $about->page_image != NULL)
+											<img src="{{ url('/storage/page/'.$about->page_image) }}" class="img-responsive" alt=""/>
+										@else
+										 	<img src="{{ asset('not-available.png') }}" class="img-responsive" alt=""/>
+										@endif
 									</div>
 									<div class="col-md-8 about-grid1">
-										<h4>Perguruan Aikido SAF Dojo</h4>
-										<p style="text-align: justify;">Secara istilah "Aikido Indonesia" pertama kali digunakan oleh Perguruan Aikido Indonesia di bawah naungan Yayasan "Keluarga Beladiri Aikido Indonesia" yang biasanya dikenal dengan istilah umum "KBAI". Yayasan KBAI ini terbentuk secara resmi pada tahun 1994 di Jakarta dengan para pendirinya yang terdiri dari Bapak Ir. Muhammad Gazali, Bapak. Drs Muhammad Razif dan Ir. Ferdiansyah.</p>
-										<p style="text-align: justify;">Sedangkan aikido di Indonesia secara organisasi telah diorganisir pertama kali oleh organisasi yang juga berbentuk yayasan, yaitu "Yayasan Indonesia Aikikai" atau "YIA" pada tahun 1984. Sedangkan menurut informasi lisan (penuturan), sejarah perkembangan aikido di Indonesia telah mulai berkembang sejak sekitar tahun 1970, bersamaan dengan kembalinya para putera Indonesia yang lulus sarjana dari Jepang yang disekolahkan Pemerintah RI sebagai akibat pampasan perang Jepang.</p>
-										<p style="text-align: justify;">Perkembangan aikido dan beladiri impor lainnya dari Jepang sebenarnya tumbuh dalam kurun waktu yang kurang lebih sama. Tetapi seni beladiri Kempo, Karate, Jujitsu dan Judo menjadi lebih dahulu populer dibandingkan Aikido pada masa itu. Dan pada kenyataannya seni beladiri aikido baru mulai tumbuh sejak tahun 1990 di Indonesia. </p>
+										<?php echo $about->page_content;?>
 									</div>
 								</div>
 							</div>
@@ -100,147 +122,126 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 										<h3>Struktur Organisasi</h3>
 										<span></span>
 										<div class="staff">
-											<div class="col-md-3 bottom1">
-												<img src="front/images/t1.png" class="img-responsive img-circle" alt=""/>
-												<h5>Mark Johnson</h5>
-												<p>Nulla facilisi. Aenean nec eros.... </p>
-											</div>
-											<div class="col-md-3 bottom1">
-												<img src="front/images/t2.png" class="img-responsive img-circle" alt=""/>
-												<h5>Mark Johnson</h5>
-												<p>Nulla facilisi. Aenean nec eros.... </p>
-											</div>
-											<div class="col-md-3 bottom1">
-												<img src="front/images/t3.png" class="img-responsive img-circle" alt=""/>
-												<h5>Mark Johnson</h5>
-												<p>Nulla facilisi. Aenean nec eros.... </p>
-											</div>
-											<div class="col-md-3 bottom1">
-												<img src="front/images/t4.png" class="img-responsive img-circle" alt=""/>
-												<h5>Mark Johnson</h5>
-												<p>Nulla facilisi. Aenean nec eros.... </p>
-											</div>
-											<div class="clearfix"></div>
-											<div class="col-md-3 bottom1">
-												<img src="front/images/t1.png" class="img-responsive img-circle" alt=""/>
-												<h5>Mark Johnson</h5>
-												<p>Nulla facilisi. Aenean nec eros.... </p>
-											</div>
-											<div class="col-md-3 bottom1">
-												<img src="front/images/t2.png" class="img-responsive img-circle" alt=""/>
-												<h5>Mark Johnson</h5>
-												<p>Nulla facilisi. Aenean nec eros.... </p>
-											</div>
-											<div class="col-md-3 bottom1">
-												<img src="front/images/t3.png" class="img-responsive img-circle" alt=""/>
-												<h5>Mark Johnson</h5>
-												<p>Nulla facilisi. Aenean nec eros.... </p>
-											</div>
-											<div class="col-md-3 bottom1">
-												<img src="front/images/t4.png" class="img-responsive img-circle" alt=""/>
-												<h5>Mark Johnson</h5>
-												<p>Nulla facilisi. Aenean nec eros.... </p>
-											</div>
-											<div class="clearfix"></div>
+											@if(count($organization) > 0)
+											   <?php $no_o = 1;?>
+											   @foreach($organization as $do)
+											    	<div class="col-md-3 bottom1" style="text-align: center;">
+											    		@if($do->photo != '' || $do->photo != NULL)
+											    		  <img src="{{ url('/storage/org/'.$do->photo) }}" class="img-circle" style="width: 152px;height: 152px;" alt=""/>
+											    		@else
+											    		  <img src="{{ asset('not-available.png') }}" class="img-circle" style="width: 152px;height: 152px;" alt=""/>
+											    		@endif
+														
+														<h5>{{ $do->name }}</h5>
+														<p>{{ $do->position }}</p>
+													</div>
+											    @if($no_o % 4 == 0)
+											    	<div class="clearfix"></div>
+											    @endif
+											   	<?php $no_o++;?>
+											   @endforeach
+											@else
+												<div class="col-md-3 bottom1">
+													<img src="front/images/t1.png" class="img-responsive img-circle" alt=""/>
+													<h5>Mark Johnson</h5>
+													<p>Nulla facilisi. Aenean nec eros.... </p>
+												</div>
+												<div class="col-md-3 bottom1">
+													<img src="front/images/t2.png" class="img-responsive img-circle" alt=""/>
+													<h5>Mark Johnson</h5>
+													<p>Nulla facilisi. Aenean nec eros.... </p>
+												</div>
+												<div class="col-md-3 bottom1">
+													<img src="front/images/t3.png" class="img-responsive img-circle" alt=""/>
+													<h5>Mark Johnson</h5>
+													<p>Nulla facilisi. Aenean nec eros.... </p>
+												</div>
+												<div class="col-md-3 bottom1">
+													<img src="front/images/t4.png" class="img-responsive img-circle" alt=""/>
+													<h5>Mark Johnson</h5>
+													<p>Nulla facilisi. Aenean nec eros.... </p>
+												</div>
+												<div class="clearfix"></div>
+												<div class="col-md-3 bottom1">
+													<img src="front/images/t1.png" class="img-responsive img-circle" alt=""/>
+													<h5>Mark Johnson</h5>
+													<p>Nulla facilisi. Aenean nec eros.... </p>
+												</div>
+												<div class="col-md-3 bottom1">
+													<img src="front/images/t2.png" class="img-responsive img-circle" alt=""/>
+													<h5>Mark Johnson</h5>
+													<p>Nulla facilisi. Aenean nec eros.... </p>
+												</div>
+												<div class="col-md-3 bottom1">
+													<img src="front/images/t3.png" class="img-responsive img-circle" alt=""/>
+													<h5>Mark Johnson</h5>
+													<p>Nulla facilisi. Aenean nec eros.... </p>
+												</div>
+												<div class="col-md-3 bottom1">
+													<img src="front/images/t4.png" class="img-responsive img-circle" alt=""/>
+													<h5>Mark Johnson</h5>
+													<p>Nulla facilisi. Aenean nec eros.... </p>
+												</div>
+												<div class="clearfix"></div>
+											@endif
 										</div>
 									</div>
 								</div>
 								<div class="col-md-4 aboutbottom-grid1">
 									<h3>Kurikulum</h3>
 									<span></span>
-									<div class="actives">
-										<div class="active-left">
-											<h5>1 .</h5>
+									@if(count($kurikulum) > 0)
+									   <?php $no_k = 1;?>
+									   @foreach($kurikulum as $dk)
+									     <div class="actives">
+											<div class="active-left">
+												<h5>{{ $no_k }} .</h5>
+											</div>
+											<div class="active-right">
+												<h5>{{ $dk->name }}</h5>
+												<?php echo $dk->description;?>
+											</div>
+											<div class="clearfix"></div>
 										</div>
-										<div class="active-right">
-											<h5>Nullam in risus dolor</h5>
-											<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed blandit massa vel mauris sollicitudin dignissim. Phasellus ultrices... </p>
+										<?php $no_k++;?>
+									   @endforeach
+									@else
+										<div class="actives">
+											<div class="active-left">
+												<h5>1 .</h5>
+											</div>
+											<div class="active-right">
+												<h5>Nullam in risus dolor</h5>
+												<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed blandit massa vel mauris sollicitudin dignissim. Phasellus ultrices... </p>
+											</div>
+											<div class="clearfix"></div>
 										</div>
-										<div class="clearfix"></div>
-									</div>
-									<div class="actives">
-										<div class="active-left">
-											<h5>2 .</h5>
+										<div class="actives">
+											<div class="active-left">
+												<h5>2 .</h5>
+											</div>
+											<div class="active-right">
+												<h5>Nullam in risus dolor</h5>
+												<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed blandit massa vel mauris sollicitudin dignissim. Phasellus ultrices... </p>
+											</div>
+											<div class="clearfix"></div>
 										</div>
-										<div class="active-right">
-											<h5>Nullam in risus dolor</h5>
-											<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed blandit massa vel mauris sollicitudin dignissim. Phasellus ultrices... </p>
+										<div class="actives">
+											<div class="active-left">
+												<h5>3 .</h5>
+											</div>
+											<div class="active-right">
+												<h5>Nullam in risus dolor</h5>
+												<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed blandit massa vel mauris sollicitudin dignissim. Phasellus ultrices... </p>
+											</div>
+											<div class="clearfix"></div>
 										</div>
-										<div class="clearfix"></div>
-									</div>
-									<div class="actives">
-										<div class="active-left">
-											<h5>3 .</h5>
-										</div>
-										<div class="active-right">
-											<h5>Nullam in risus dolor</h5>
-											<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed blandit massa vel mauris sollicitudin dignissim. Phasellus ultrices... </p>
-										</div>
-										<div class="clearfix"></div>
-									</div>
+									@endif
 								</div>
 								<div class="clearfix"></div>
 							</div>
 						</div>
 					</div>
-
-					<!-- <div class="partner">
-						<div class="container">
-							<h3>Partner Kami</h3>
-							<span></span>
-							<div class="partner-grids">
-								<div class="col-md-3 partner-grid">
-									<div class="partners">
-										<div class="partner-left">
-										<i class="glyphicon glyphicon-asterisk" aria-hidden="true"></i>
-										</div>
-										<div class="partner-right">
-											<h4>company name</h4>
-											<p>company description</p>
-										</div>
-										<div class="clearfix"></div>
-									</div>
-								</div>
-								<div class="col-md-3 partner-grid">
-									<div class="partners">
-										<div class="partner-left">
-										<i class="glyphicon glyphicon-qrcode" aria-hidden="true"></i>
-										</div>
-										<div class="partner-right">
-											<h4>company name</h4>
-											<p>company description</p>
-										</div>
-										<div class="clearfix"></div>
-									</div>
-								</div>
-								<div class="col-md-3 partner-grid">
-									<div class="partners">
-										<div class="partner-left">
-										<i class="glyphicon glyphicon-star" aria-hidden="true"></i>
-										</div>
-										<div class="partner-right">
-											<h4>company name</h4>
-											<p>company description</p>
-										</div>
-										<div class="clearfix"></div>
-									</div>
-								</div>
-								<div class="col-md-3 partner-grid">
-									<div class="partners">
-										<div class="partner-left">
-										<i class="glyphicon glyphicon-fire" aria-hidden="true"></i>
-										</div>
-										<div class="partner-right">
-											<h4>company name</h4>
-											<p>company description</p>
-										</div>
-										<div class="clearfix"></div>
-									</div>
-								</div>
-								<div class="clearfix"></div>
-							</div>
-						</div>
-					</div> -->	
 				</div>
 		<!---content--->
 		<!--footer-->
@@ -253,10 +254,28 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 							<a href="#"><i class="icon4"></i></a>
 						</div>
 						<div class="footer-top">
-							<p>&copy; 2018 Perguruan Aikido SAF Dojo. All rights reserved</p>
+							<p>Copyright &copy; 2018 Perguruan Aikido SAF Dojo. All rights reserved</p>
 						</div>						
 					</div>
 				</div>
 			<!--footer-->
+			 <button onclick="topFunction()" id="myBtn" title="Go to top"><i class="glyphicon glyphicon-chevron-up"></i></button> 
+			 <script type="text/javascript">
+			 	window.onscroll = function() {scrollFunction()};
+
+				function scrollFunction() {
+				    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+				        document.getElementById("myBtn").style.display = "block";
+				    } else {
+				        document.getElementById("myBtn").style.display = "none";
+				    }
+				}
+
+				// When the user clicks on the button, scroll to the top of the document
+				function topFunction() {
+				    document.body.scrollTop = 0; // For Safari
+				    document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+				} 
+			 </script>
 </body>
 </html>

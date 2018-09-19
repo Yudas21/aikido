@@ -14,10 +14,12 @@ use App\Akses;
 use Indras;
 use App\User;
 use App\Page;
+use App\Organization;
 use App\News;
 use App\Schedule;
 use App\ImageGallery;
 use App\VideoGallery;
+use App\Kurikulum;
 
 class AdminController extends Controller
 {
@@ -122,7 +124,7 @@ class AdminController extends Controller
             'name' => 'required|string'
         ]);
 
-        $create = Menu::create([
+        Menu::create([
             'name' => $request->name,
             'url' => $request->url,
             'parent' => $request->parent
@@ -136,7 +138,7 @@ class AdminController extends Controller
             'name' => 'required|string'
         ]);
 
-        $update = Menu::findOrFail($id)->update([
+        Menu::findOrFail($id)->update([
             'name' => $request->name,
             'url' => $request->url,
             'parent' => $request->parent
@@ -522,7 +524,7 @@ class AdminController extends Controller
             'to_time' => 'required'
         ]);
 
-        $create = Schedule::create([
+        Schedule::create([
             'from_day' => $request->from_day,
             'from_time' => $request->from_time,
             'to_time' => $request->to_time
@@ -538,7 +540,7 @@ class AdminController extends Controller
             'to_time' => 'required'
         ]);
 
-        $update = Schedule::findOrFail($id)->update([
+        Schedule::findOrFail($id)->update([
             'from_day' => $request->from_day,
             'from_time' => $request->from_time,
             'to_time' => $request->to_time
@@ -716,6 +718,135 @@ class AdminController extends Controller
         }
         VideoGallery::findOrFail($id)->delete();
         return redirect('admin/video_gallery')->with('message', 'Video berhasil dihapus!');
+    }
+
+    public function organization(){
+        $data = Organization::all();
+        return view('admin.organization', compact('data'));
+    }
+
+    public function organization_add(){
+        return view('admin.organization_add');
+    }
+
+    public function organization_store(Request $request){
+        $this->validate($request, [
+            'name' => 'required',
+            'photo' => 'file|max:1024',
+            'position' => 'required'
+        ]);
+
+        $uploadedFile = $request->file('photo'); 
+        if($uploadedFile!=''){
+            $path = $uploadedFile->store('public/org');
+            $pecah = explode('/', $path);
+
+            Organization::create([
+                           'name' => $request->name,
+                           'photo' => $pecah[2],
+                           'position' => $request->position
+            ]);
+        } else {
+            Organization::create([
+                           'name' => $request->name,
+                           'position' => $request->position
+            ]);
+        }
+        
+        
+        return redirect('admin/organization')->with('message', 'Kepengurusan baru berhasil ditambah!');
+    }
+
+    public function organization_update($id){
+        $data = Organization::where('id',$id)->first();
+        return view('admin.organization_update', compact('data'));
+        // return $data;
+    }
+
+    public function organization_pupdate($id, Request $request){
+        
+        $this->validate($request, [
+            'name' => 'required',
+            'photo' => 'file|max:1024',
+            'position' => 'required' 
+        ]);
+
+        $file = Indras::get_organization_photo($id);
+        $uploadedFile = $request->file('photo'); 
+        
+        if($uploadedFile!=''){
+            $path = $uploadedFile->store('public/org');
+            $pecah = explode('/', $path);
+            Organization::findOrFail($id)->update([
+                'name' => $request->name,
+                'position' => $request->position,
+                'photo' => $pecah[2]
+            ]);
+            if($file != '' || $file != NULL){
+                unlink(storage_path('app/public/org/'.$file));
+            }
+        } else {
+            Organization::findOrFail($id)->update([
+                'name' => $request->name,
+                'position' => $request->position
+            ]);
+        }
+
+        return redirect('admin/organization')->with('message', 'Data organisasi berhasil diubah!');
+    }
+
+    public function organization_destroy($id){
+        $file = Indras::get_organization_photo($id);
+        if($file != '' || $file != NULL){
+            unlink(storage_path('app/public/org/'.$file));
+        }
+        Organization::findOrFail($id)->delete();
+        return redirect('admin/organization')->with('message', 'Data organisasi berhasil dihapus!');
+    }
+
+    public function kurikulum(){
+        $data = Kurikulum::all();
+        return view('admin.kurikulum', compact('data'));
+    }
+
+    public function kurikulum_add(){
+        return view('admin.kurikulum_add');
+    }
+
+    public function kurikulum_update($id){
+        $data = Kurikulum::where('id',$id)->first();
+        return view('admin.kurikulum_update', compact('data'));
+    }
+
+    public function kurikulum_store(Request $request){
+        $this->validate($request, [
+            'name' => 'required'
+        ]);
+
+        Kurikulum::create([
+            'name' => $request->name,
+            'description' => $request->description
+        ]);
+        
+        return redirect('admin/kurikulum')->with('message', 'Kurikulum baru berhasil disimpan');
+    }
+
+    public function kurikulum_pupdate($id, Request $request){
+        $this->validate($request, [
+            'name' => 'required'
+        ]);
+
+        Kurikulum::findOrFail($id)->update([
+            'name' => $request->name,
+            'description' => $request->description
+        ]);
+
+        return redirect('admin/kurikulum')->with('message', 'Kurikulum berhasil diubah');
+    }
+
+    public function kurikulum_destroy($id){
+        Kurikulum::findOrFail($id)->delete();
+        return redirect('admin/kurikulum')->with('message', 'Kurikulum berhasil dihapus');
     }
 
     public function logout(){

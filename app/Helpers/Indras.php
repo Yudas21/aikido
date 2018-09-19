@@ -8,6 +8,7 @@ use App\Menu;
 use App\Akses;
 use App\Level;
 use App\Page;
+use App\Organization;
 use App\News;
 use App\ImageGallery;
 use App\VideoGallery;
@@ -117,6 +118,17 @@ class Indras {
         if(VideoGallery::select('video_path')->where('id', $id)->count() > 0){
             foreach ($menus as $value) {
                 $name = $value->video_path;
+            }
+        }
+        return $name;
+    }
+
+    public static function get_organization_photo($id){
+        $name = '';
+        $menus = Organization::select('photo')->where('id', $id)->get();
+        if(Organization::select('photo')->where('id', $id)->count() > 0){
+            foreach ($menus as $value) {
+                $name = $value->photo;
             }
         }
         return $name;

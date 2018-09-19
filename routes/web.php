@@ -19,7 +19,7 @@
 
 // Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/', function () {
-    return redirect(url('/'));
+    return view('front.home');
 });
 Route::get('/', 'HomeController@index');
 Route::get('about', 'AboutController@index');
@@ -77,6 +77,15 @@ Route::delete('admin/delete_pages/{pages}', 'AdminController@pages_destroy');
 Route::get('admin/upload_pages/{pages}', 'AdminController@pages_upload');
 Route::patch('admin/pupload_pages/{pages}', 'AdminController@pages_pupload');
 
+
+// CRUD Organisasi
+Route::get('admin/organization', 'AdminController@organization');
+Route::get('admin/add_organization', 'AdminController@organization_add');
+Route::post('admin/padd_organization', 'AdminController@organization_store');
+Route::get('admin/update_organization/{org}', 'AdminController@organization_update');
+Route::patch('admin/pupdate_organization/{org}', 'AdminController@organization_pupdate');
+Route::delete('admin/delete_organization/{org}', 'AdminController@organization_destroy');
+
 // CRUD News
 Route::get('admin/news', 'AdminController@news');
 Route::get('admin/add_news', 'AdminController@news_add');
@@ -110,4 +119,12 @@ Route::post('admin/padd_video_gallery', 'AdminController@gallery_video_store');
 Route::get('admin/update_video_gallery/{video}', 'AdminController@gallery_video_update');
 Route::patch('admin/pupdate_video_gallery/{video}', 'AdminController@gallery_video_pupdate');
 Route::delete('admin/delete_video_gallery/{video}', 'AdminController@gallery_video_destroy');
+
+// CRUD Kurikulum
+Route::get('admin/kurikulum', 'AdminController@kurikulum');
+Route::get('admin/add_kurikulum', 'AdminController@kurikulum_add');
+Route::post('admin/padd_kurikulum', 'AdminController@kurikulum_store');
+Route::get('admin/update_kurikulum/{kurikulum}', 'AdminController@kurikulum_update');
+Route::patch('admin/pupdate_kurikulum/{kurikulum}', 'AdminController@kurikulum_pupdate');
+Route::delete('admin/delete_kurikulum/{kurikulum}', 'AdminController@kurikulum_destroy');
 

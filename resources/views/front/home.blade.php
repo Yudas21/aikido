@@ -38,6 +38,27 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         });
         });
     </script>
+    <style type="text/css">
+    #myBtn {
+        display: none; /* Hidden by default */
+        position: fixed; /* Fixed/sticky position */
+        bottom: 20px; /* Place the button at the bottom of the page */
+        right: 30px; /* Place the button 30px from the right */
+        z-index: 99; /* Make sure it does not overlap */
+        border: none; /* Remove borders */
+        outline: none; /* Remove outline */
+        background-color: #6495ED; /* Set a background color */
+        color: white; /* Text color */
+        cursor: pointer; /* Add a mouse pointer on hover */
+        padding: 15px; /* Some padding */
+        border-radius: 10px; /* Rounded corners */
+        font-size: 18px; /* Increase font size */
+    }
+
+    #myBtn:hover {
+        background-color: #555; /* Add a dark-grey background on hover */
+    }
+</style>
 <!---slider--->
 </head>
 <body>
@@ -145,7 +166,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                               @foreach($latest_news as $dln)
                                 <div class="news-grids">
                                     <div class="col-md-4 new-grid">
-                                        <a href="#" class="mask"><img src="{{ url('/storage/news/'.$dln->news_image) }}" class="img-responsive zoom-img" alt=""/></a>
+                                        @if($dln->news_image != '' || $dln->news_image != NULL)
+                                          <a href="#" class="mask"><img src="{{ url('/storage/news/'.$dln->news_image) }}" class="img-responsive zoom-img" alt=""/></a>
+                                        @else
+                                          <a href="#" class="mask"><img src="{{ asset('not-available.png') }}" class="img-responsive zoom-img" alt=""/></a>
+                                        @endif
+                                        
                                     </div>
                                     <div class="col-md-8 new-grid1 hvr-bounce-to-right">
                                         <div style="color:#555;"><i class="glyphicon glyphicon-calendar"></i> {{ date('d F Y | H:i', strtotime($dln->created_at)) }} <i class="glyphicon glyphicon-user"></i></div>
@@ -192,63 +218,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                             @endif
                         </div>
                     </div>
-                    <!-- <div class="partner">
-                        <div class="container">
-                            <h3>Partner Kami</h3>
-                            <span></span>
-                            <div class="partner-grids">
-                                <div class="col-md-3 partner-grid">
-                                    <div class="partners">
-                                        <div class="partner-left">
-                                        <i class="glyphicon glyphicon-asterisk" aria-hidden="true"></i>
-                                        </div>
-                                        <div class="partner-right">
-                                            <h4>company name</h4>
-                                            <p>company description</p>
-                                        </div>
-                                        <div class="clearfix"></div>
-                                    </div>
-                                </div>
-                                <div class="col-md-3 partner-grid">
-                                    <div class="partners">
-                                        <div class="partner-left">
-                                        <i class="glyphicon glyphicon-qrcode" aria-hidden="true"></i>
-                                        </div>
-                                        <div class="partner-right">
-                                            <h4>company name</h4>
-                                            <p>company description</p>
-                                        </div>
-                                        <div class="clearfix"></div>
-                                    </div>
-                                </div>
-                                <div class="col-md-3 partner-grid">
-                                    <div class="partners">
-                                        <div class="partner-left">
-                                        <i class="glyphicon glyphicon-star" aria-hidden="true"></i>
-                                        </div>
-                                        <div class="partner-right">
-                                            <h4>company name</h4>
-                                            <p>company description</p>
-                                        </div>
-                                        <div class="clearfix"></div>
-                                    </div>
-                                </div>
-                                <div class="col-md-3 partner-grid">
-                                    <div class="partners">
-                                        <div class="partner-left">
-                                        <i class="glyphicon glyphicon-fire" aria-hidden="true"></i>
-                                        </div>
-                                        <div class="partner-right">
-                                            <h4>company name</h4>
-                                            <p>company description</p>
-                                        </div>
-                                        <div class="clearfix"></div>
-                                    </div>
-                                </div>
-                                <div class="clearfix"></div>
-                            </div>
-                        </div>
-                    </div> -->
                 </div>  
         <!---content--->
         <!--footer-->
@@ -261,10 +230,28 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                             <a href="#"><i class="icon4"></i></a>
                         </div>
                         <div class="footer-top">
-                            <p>&copy; 2018 Perguruan Aikido SAF Dojo. All rights reserved</p>
+                            <p>Copyright &copy; 2018 Perguruan Aikido SAF Dojo. All rights reserved</p>
                         </div>                      
                     </div>
                 </div>
             <!--footer-->
+        <button onclick="topFunction()" id="myBtn" title="Go to top"><i class="glyphicon glyphicon-chevron-up"></i></button> 
+             <script type="text/javascript">
+                window.onscroll = function() {scrollFunction()};
+
+                function scrollFunction() {
+                    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                        document.getElementById("myBtn").style.display = "block";
+                    } else {
+                        document.getElementById("myBtn").style.display = "none";
+                    }
+                }
+
+                // When the user clicks on the button, scroll to the top of the document
+                function topFunction() {
+                    document.body.scrollTop = 0; // For Safari
+                    document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+                } 
+             </script>
 </body>
 </html>
