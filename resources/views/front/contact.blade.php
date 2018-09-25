@@ -80,19 +80,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 							<div class="contact-bottom">
 								<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5608.540474886801!2d106.8336225056813!3d-6.285145935955824!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f213b9a1b9db%3A0x35951e9783a0f5a6!2sGelanggang+Remaja+Kecamatan+Pasar+Minggu!5e0!3m2!1sid!2sid!4v1536890331733" frameborder="0" style="border:0" allowfullscreen></iframe>
 							</div>
-							<div class="col-md-8 contact-left">
-								<h4>Form Kontak</h4>
-								<form>
-									<input type="text" value="Name" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Name';}" required="">
-									<input type="email" value="Email" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Email';}" required="">
-									<input type="text" value="Telephone" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Telephone';}" required="">
-									<textarea type="text"  onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Message...';}" required="">Pesan...</textarea>
-									<input type="submit" value="Kirim" >
-									<input type="reset" value="Reset" >
-
-								</form>
-							</div>
-							<div class="col-md-4 contact-left cont">
+							<div class="col-md-12 contact-left">
 								<h4>Alamat</h4>
 								<p><span>Balai Rakyat Pasar Minggu Jakarta Selatan</span></p>
 								<ul>

@@ -108,71 +108,26 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					<div class="events-section">
 						<div class="container">
 							<div class="event-grids">
-								<div class="col-md-4 event-grid">
-								<img src="{{ asset('front/images/e1.jpg') }}" class="img-responsive" alt="/">
-										<div class="event-text">
-											<h5>16</h5>
-											<span> Agustus</span>
-											<span> 2018</span>
-										</div>
-									<h4>Consectetuer adipis</h4>
-									<p>Mauris fermentum tortor non enim aliquet condimentum. Nam aliquam pretium feugiat. Duis sem est, viverra eu interdum ac, suscipit nec</p>
-								</div>
-								<div class="col-md-4 event-grid">
-								<img src="{{ asset('front/images/e2.jpg') }}" class="img-responsive" alt="/">
-										<div class="event-text">
-											<h5>15</h5>
-											<span> Agustus</span>
-											<span> 2018</span>
-										</div>
-									<h4>Consectetuer adipis</h4>
-									<p>Mauris fermentum tortor non enim aliquet condimentum. Nam aliquam pretium feugiat. Duis sem est, viverra eu interdum ac, suscipit nec</p>
-								</div>
-								<div class="col-md-4 event-grid">
-								<img src="{{ asset('front/images/e3.jpg') }}" class="img-responsive" alt="/">
-										<div class="event-text">
-											<h5>14</h5>
-											<span> Agustus</span>
-											<span> 2018</span>
-										</div>
-									<h4>Consectetuer adipis</h4>
-									<p>Mauris fermentum tortor non enim aliquet condimentum. Nam aliquam pretium feugiat. Duis sem est, viverra eu interdum ac, suscipit nec</p>
-								</div>
-								<div class="clearfix"></div>
-							</div>
-							<div class="event-grids">
-								<div class="col-md-4 event-grid">
-								<img src="{{ asset('front/images/1.jpg') }}" class="img-responsive" alt="/">
-										<div class="event-text">
-											<h5>13</h5>
-											<span> Agustus</span>
-											<span> 2018</span>
-										</div>
-									<h4>Consectetuer adipis</h4>
-									<p>Mauris fermentum tortor non enim aliquet condimentum. Nam aliquam pretium feugiat. Duis sem est, viverra eu interdum ac, suscipit nec</p>
-								</div>
-								<div class="col-md-4 event-grid">
-								<img src="{{ asset('front/images/2.jpg') }}" class="img-responsive" alt="/">
-										<div class="event-text">
-											<h5>12</h5>
-											<span> Agustus</span>
-											<span> 2018</span>
-										</div>
-									<h4>Consectetuer adipis</h4>
-									<p>Mauris fermentum tortor non enim aliquet condimentum. Nam aliquam pretium feugiat. Duis sem est, viverra eu interdum ac, suscipit nec</p>
-								</div>
-								<div class="col-md-4 event-grid">
-								<img src="{{ asset('front/images/3.jpg') }}" class="img-responsive" alt="/">
-										<div class="event-text">
-											<h5>11</h5>
-											<span> Agustus</span>
-											<span> 2018</span>
-										</div>
-									<h4>Consectetuer adipis</h4>
-									<p>Mauris fermentum tortor non enim aliquet condimentum. Nam aliquam pretium feugiat. Duis sem est, viverra eu interdum ac, suscipit nec</p>
-								</div>
-								<div class="clearfix"></div>
-							</div>
+								<?php $no = 1; ?>
+								@foreach($data as $d_news)
+
+									<div class="col-md-4 event-grid">
+									<img src="<?php echo $d_news->news_image!='' ? asset('storage/news/'.$d_news->news_image) : asset('not-available.png');?>" class="img-responsive" alt="/">
+											<div class="event-text">
+												<h5>{{ date('d', strtotime($d_news->created_at)) }}</h5>
+												<span>{{ date('F', strtotime($d_news->created_at)) }}</span>
+												<span>{{ date('Y', strtotime($d_news->created_at)) }}</span>
+											</div>
+										<h4>{{ $d_news->news_title }}</h4>
+										<?php echo substr($d_news->news_content,0,100);?>
+									</div>
+									@if($no % 4 == 0)
+										<div class="clearfix"></div>
+									@endif
+									<?php $no++; ?>
+								@endforeach
+							</div>	
+							{{ $data->links() }}
 						</div>
 					</div>
 				</div>
