@@ -21,8 +21,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <script src="{{ asset('front/js/bootstrap.js') }}"></script>
 <!---js--->
 <!---fonts-->
-<link href='//fonts.googleapis.com/css?family=Cookie' rel='stylesheet' type='text/css'><link href='//fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic' rel='stylesheet' type='text/css'>
-<link href='//fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic' rel='stylesheet' type='text/css'>
+<link href='//fonts.googleapis.com/css?family=Cookie' rel='stylesheet' type='text/css'><link href='//fonts.googleapis.com/css?family=Arial:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic' rel='stylesheet' type='text/css'>
+<link href='//fonts.googleapis.com/css?family=Arial:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic' rel='stylesheet' type='text/css'>
 <link href='//fonts.googleapis.com/css?family=Contrail+One' rel='stylesheet' type='text/css'>
 <!---fonts-->
 <!---slider--->
@@ -54,6 +54,27 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		});
 	</script>
 <!---slider--->
+<style type="text/css">
+	#myBtn {
+	    display: none; /* Hidden by default */
+	    position: fixed; /* Fixed/sticky position */
+	    bottom: 20px; /* Place the button at the bottom of the page */
+	    right: 30px; /* Place the button 30px from the right */
+	    z-index: 99; /* Make sure it does not overlap */
+	    border: none; /* Remove borders */
+	    outline: none; /* Remove outline */
+	    background-color: #dc3545; /* Set a background color */
+	    color: white; /* Text color */
+	    cursor: pointer; /* Add a mouse pointer on hover */
+	    padding: 15px; /* Some padding */
+	    border-radius: 10px; /* Rounded corners */
+	    font-size: 18px; /* Increase font size */
+	}
+
+	#myBtn:hover {
+	    background-color: #555; /* Add a dark-grey background on hover */
+	}
+</style>
 </head>
 <body>
 	<!---header--->
@@ -115,10 +136,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 									<img src="<?php echo $d_news->news_image!='' ? asset('storage/news/'.$d_news->news_image) : asset('not-available.png');?>" class="img-responsive" alt="/">
 											<div class="event-text">
 												<h5>{{ date('d', strtotime($d_news->created_at)) }}</h5>
-												<span>{{ date('F', strtotime($d_news->created_at)) }}</span>
+												<span>{{ date('M', strtotime($d_news->created_at)) }}</span>
 												<span>{{ date('Y', strtotime($d_news->created_at)) }}</span>
 											</div>
-										<h4>{{ $d_news->news_title }}</h4>
+										<a href="{{ url('news/detail/'.$d_news->id.'-'.$d_news->news_slug) }}" style="color: #555;"><h4>{{ $d_news->news_title }}</h4></a>
 										<?php echo substr($d_news->news_content,0,100);?>
 									</div>
 									@if($no % 4 == 0)
@@ -143,10 +164,28 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 							<a href="#"><i class="icon4"></i></a>
 						</div>
 						<div class="footer-top">
-							<p>&copy; 2018 Perguruan Aikido SAF Dojo. All rights reserved</p>
+							<p>Copyright &copy; 2018 Perguruan Aikido SAF Dojo. All rights reserved</p>
 						</div>						
 					</div>
 				</div>
 			<!--footer-->
+			<button onclick="topFunction()" id="myBtn" title="Go to top"><i class="glyphicon glyphicon-chevron-up"></i></button> 
+             <script type="text/javascript">
+                window.onscroll = function() {scrollFunction()};
+
+                function scrollFunction() {
+                    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                        document.getElementById("myBtn").style.display = "block";
+                    } else {
+                        document.getElementById("myBtn").style.display = "none";
+                    }
+                }
+
+                // When the user clicks on the button, scroll to the top of the document
+                function topFunction() {
+                    document.body.scrollTop = 0; // For Safari
+                    document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+                } 
+             </script>
 </body>
 </html>

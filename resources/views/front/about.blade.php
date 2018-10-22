@@ -21,7 +21,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <script src="front/js/bootstrap.js"></script>
 <!---js--->
 <!---fonts-->
-<link href='//fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic' rel='stylesheet' type='text/css'>
+<link href='//fonts.googleapis.com/css?family=Arial:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic' rel='stylesheet' type='text/css'>
 <link href='//fonts.googleapis.com/css?family=Contrail+One' rel='stylesheet' type='text/css'>
 <style type="text/css">
 	#myBtn {
@@ -32,7 +32,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	    z-index: 99; /* Make sure it does not overlap */
 	    border: none; /* Remove borders */
 	    outline: none; /* Remove outline */
-	    background-color: #6495ED; /* Set a background color */
+	    background-color: #dc3545; /* Set a background color */
 	    color: white; /* Text color */
 	    cursor: pointer; /* Add a mouse pointer on hover */
 	    padding: 15px; /* Some padding */
@@ -61,7 +61,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 								<span class="icon-bar"></span>
 							</button>				  
 							<div class="navbar-brand">
-								<h1 style="font-size: 26px;margin-top: 10px;"><a href="{{ url('') }}">Perguruan Aikido SAF Dojo</a></h1>
+								<h1><a href="{{ url('') }}">Perguruan Aikido SAF Dojo</a></h1>
 							</div>
 						</div>
 
@@ -119,7 +119,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 							<div class="aboutbottom-grids">
 								<div class="col-md-8 aboutbottom-grid">
 									<div class="about-bottom1">
-										<h3>Struktur Organisasi</h3>
+										<h3>Kepengurusan</h3>
 										<span></span>
 										<div class="staff">
 											@if(count($organization) > 0)
@@ -184,6 +184,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 												</div>
 												<div class="clearfix"></div>
 											@endif
+											<div class="clearfix"></div>
+											<div class="clearfix"></div>
 										</div>
 									</div>
 								</div>

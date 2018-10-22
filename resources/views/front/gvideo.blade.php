@@ -6,7 +6,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <!DOCTYPE HTML>
 <html>
 <head>
-<title>Perguruan Aikido SAF Dojo | Galeri Gambar<</title>
+<title>Perguruan Aikido SAF Dojo | Galeri Video<</title>
 <!---css--->
 <link href="{{ asset('front/css/bootstrap.css') }}" rel='stylesheet' type='text/css' />
 <link href="{{ asset('front/css/style.css') }}" rel='stylesheet' type='text/css' />
@@ -21,7 +21,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <script src="{{ asset('front/js/bootstrap.js') }}"></script>
 <!---js--->
 <!---fonts-->
-<link href='//fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic' rel='stylesheet' type='text/css'>
+<link href='//fonts.googleapis.com/css?family=Arial:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic' rel='stylesheet' type='text/css'>
 <link href='//fonts.googleapis.com/css?family=Contrail+One' rel='stylesheet' type='text/css'>
 <!---fonts-->
 <!---slider--->
@@ -33,6 +33,27 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			});
 		</script>
 <!---slider--->
+<style type="text/css">
+	#myBtn {
+	    display: none; /* Hidden by default */
+	    position: fixed; /* Fixed/sticky position */
+	    bottom: 20px; /* Place the button at the bottom of the page */
+	    right: 30px; /* Place the button 30px from the right */
+	    z-index: 99; /* Make sure it does not overlap */
+	    border: none; /* Remove borders */
+	    outline: none; /* Remove outline */
+	    background-color: #dc3545; /* Set a background color */
+	    color: white; /* Text color */
+	    cursor: pointer; /* Add a mouse pointer on hover */
+	    padding: 15px; /* Some padding */
+	    border-radius: 10px; /* Rounded corners */
+	    font-size: 18px; /* Increase font size */
+	}
+
+	#myBtn:hover {
+	    background-color: #555; /* Add a dark-grey background on hover */
+	}
+</style>
 </head>
 <body>
 	<!---header--->
@@ -86,123 +107,33 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				<div class="content">
 					<div class="gallery">
 						<div class="container">
-						<div class="gallery-grids">
-								<div class="col-md-3 gallery-grid gallery1">
-								<a href="{{ asset('front/images/1.jpg') }}" class="swipebox">
-									<img src="{{ asset('front/images/1.jpg') }}" class="img-responsive" alt="/">
-									<div class="textbox">
-										<h4>laboriosam</h4>
-										<p>Quis autem vel eum iure reprehenderit qui in ea voluptate velit.</p>
+							<div class="gallery-grids">
+							    <?php $no = 1; ?>
+							    @foreach ($data as $d_video)
+							    	<div class="col-md-3 gallery-grid">
+										
+										@if($d_video->video_path!='' || $d_video->video_path!= NULL)
+                                          <?php 
+                                                $pecah = explode('.', $d_video->video_path);
+                                                $ekstensi = $pecah[1];
+                                          ?>
+                                               <video width="265" height="198" controls>
+                                                <source src="{{ url('/storage/video/'.$d_video->video_path) }}" type="video/<?php echo $ekstensi;?>">
+                                              </video>
+                                        @endif
+                                        @if($d_video->video_url!='' || $d_video->video_url!= NULL)
+                                            <iframe width="265" height="198" src="https://www.youtube.com/embed/<?php echo $d_video->video_url;?>"></iframe> 
+                                        @endif
+									
 									</div>
-								</a>
-								</div>
-								<div class="col-md-3 gallery-grid gallery1">
-									<a href="{{ asset('front/images/2.jpg') }}" class="swipebox">
-										<img src="{{ asset('front/images/2.jpg') }}" class="img-responsive" alt="/">
-										<div class="textbox">
-											<h4>Martial Arts</h4>
-											<p>Quis autem vel eum iure reprehenderit qui in ea voluptate velit.</p>
-										</div> 
-									</a>
-								</div>
-								<div class="col-md-3 gallery-grid gallery1">
-									<a href="{{ asset('front/images/3.jpg') }}" class="swipebox">
-										<img src="{{ asset('front/images/3.jpg') }}" class="img-responsive" alt="/">
-										<div class="textbox">
-											<h4>Autem vel</h4>
-											<p>Quis autem vel eum iure reprehenderit qui in ea voluptate velit.</p>
-										</div>
-									</a>
-								</div>
-								<div class="col-md-3 gallery-grid gallery1">
-									<a href="{{ asset('front/images/4.jpg') }}" class="swipebox">
-										<img src="{{ asset('front/images/4.jpg') }}" class="img-responsive" alt="/">
-										<div class="textbox">
-											<h4>Voluptate</h4>
-											<p>Quis autem vel eum iure reprehenderit qui in ea voluptate velit.</p>
-										</div>
-									</a>
-								</div>
-								<div class="clearfix"> </div>
-							</div>
-							<div class="grid-gallery">
-								<div class="col-md-3 gallery-grid gallery1">
-								<a href="{{ asset('front/images/5.jpg') }}" class="swipebox">
-									<img src="{{ asset('front/images/5.jpg') }}" class="img-responsive" alt="/">
-									<div class="textbox">
-										<h4>laboriosam</h4>
-										<p>Quis autem vel eum iure reprehenderit qui in ea voluptate velit.</p>
-									</div>
-								</a>
-								</div>
-								<div class="col-md-3 gallery-grid gallery1">
-									<a href="{{ asset('front/images/6.jpg') }}" class="swipebox">
-										<img src="{{ asset('front/images/6.jpg') }}" class="img-responsive" alt="/">
-										<div class="textbox">
-											<h4>Martial Arts</h4>
-											<p>Quis autem vel eum iure reprehenderit qui in ea voluptate velit.</p>
-										</div> 
-									</a>
-								</div>
-								<div class="col-md-3 gallery-grid gallery1">
-									<a href="{{ asset('front/images/7.jpg') }}" class="swipebox">
-										<img src="{{ asset('front/images/7.jpg') }}" class="img-responsive" alt="/">
-										<div class="textbox">
-											<h4>Autem vel</h4>
-											<p>Quis autem vel eum iure reprehenderit qui in ea voluptate velit.</p>
-										</div>
-									</a>
-								</div>
-								<div class="col-md-3 gallery-grid gallery1">
-									<a href="{{ asset('front/images/8.jpg') }}" class="swipebox">
-										<img src="{{ asset('front/images/8.jpg') }}" class="img-responsive" alt="/">
-										<div class="textbox">
-											<h4>Voluptate</h4>
-											<p>Quis autem vel eum iure reprehenderit qui in ea voluptate velit.</p>
-										</div>
-									</a>
-								</div>
-								<div class="clearfix"> </div>
-							</div>
-							<div class="grid-gallery">
-								<div class="col-md-3 gallery-grid gallery1">
-								<a href="{{ asset('front/images/4.jpg') }}" class="swipebox">
-									<img src="{{ asset('front/images/4.jpg') }}" class="img-responsive" alt="/">
-									<div class="textbox">
-										<h4>laboriosam</h4>
-										<p>Quis autem vel eum iure reprehenderit qui in ea voluptate velit.</p>
-									</div>
-								</a>
-								</div>
-								<div class="col-md-3 gallery-grid gallery1">
-									<a href="{{ asset('front/images/1.jpg') }}" class="swipebox">
-										<img src="{{ asset('front/images/1.jpg') }}" class="img-responsive" alt="/">
-										<div class="textbox">
-											<h4>Martial Arts</h4>
-											<p>Quis autem vel eum iure reprehenderit qui in ea voluptate velit.</p>
-										</div> 
-									</a>
-								</div>
-								<div class="col-md-3 gallery-grid gallery1">
-									<a href="{{ asset('front/images/3.jpg') }}" class="swipebox">
-										<img src="{{ asset('front/images/3.jpg') }}" class="img-responsive" alt="/">
-										<div class="textbox">
-											<h4>Autem vel</h4>
-											<p>Quis autem vel eum iure reprehenderit qui in ea voluptate velit.</p>
-										</div>
-									</a>
-								</div>
-								<div class="col-md-3 gallery-grid gallery1">
-									<a href="{{ asset('front/images/2.jpg') }}" class="swipebox">
-										<img src="{{ asset('front/images/2.jpg') }}" class="img-responsive" alt="/">
-										<div class="textbox">
-											<h4>Voluptate</h4>
-											<p>Quis autem vel eum iure reprehenderit qui in ea voluptate velit.</p>
-										</div>
-									</a>
-								</div>
-								<div class="clearfix"> </div>
-							</div>
+									@if($no % 4 == 0)
+										<div class="clearfix"> </div>	  
+									@endif
+									<?php $no++;?>
+							    @endforeach
+						</div>
+						<div class="clearfix"> </div>
+						{{ $data->links() }}
 						</div>
 					</div><br><br>
 					<!---features--->	
@@ -218,10 +149,28 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 							<a href="#"><i class="icon4"></i></a>
 						</div>
 						<div class="footer-top">
-							<p>&copy; 2018 Perguruan Aikido SAF Dojo . All rights reserved</p>
+							<p>Copyright &copy; 2018 Perguruan Aikido SAF Dojo. All rights reserved</p>
 						</div>						
 					</div>
 				</div>
 			<!--footer-->
+			<button onclick="topFunction()" id="myBtn" title="Go to top"><i class="glyphicon glyphicon-chevron-up"></i></button> 
+             <script type="text/javascript">
+                window.onscroll = function() {scrollFunction()};
+
+                function scrollFunction() {
+                    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                        document.getElementById("myBtn").style.display = "block";
+                    } else {
+                        document.getElementById("myBtn").style.display = "none";
+                    }
+                }
+
+                // When the user clicks on the button, scroll to the top of the document
+                function topFunction() {
+                    document.body.scrollTop = 0; // For Safari
+                    document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+                } 
+             </script>
 </body>
 </html>

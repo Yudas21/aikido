@@ -27,6 +27,7 @@ Route::get('contact', 'ContactController@index');
 Route::get('gallery/foto', 'GalleryController@foto');
 Route::get('gallery/video', 'GalleryController@video');
 Route::get('news', 'NewsController@index');
+Route::get('news/detail/{news}', 'NewsController@detail');
 Route::get('schedule', 'ScheduleController@index');
 
 Route::get('login', 'LoginController@index');

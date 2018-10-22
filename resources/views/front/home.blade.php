@@ -21,7 +21,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <script src="front/js/bootstrap.js"></script>
 <!---js--->
 <!---fonts-->
-<link href='//fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic' rel='stylesheet' type='text/css'>
+<link href='//fonts.googleapis.com/css?family=Arial:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic' rel='stylesheet' type='text/css'>
 <link href='//fonts.googleapis.com/css?family=Contrail+One' rel='stylesheet' type='text/css'>
 <!---fonts-->
 <link href="front/css/owl.carousel.css" rel="stylesheet">
@@ -47,7 +47,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         z-index: 99; /* Make sure it does not overlap */
         border: none; /* Remove borders */
         outline: none; /* Remove outline */
-        background-color: #6495ED; /* Set a background color */
+        background-color: #dc3545; /* Set a background color */
         color: white; /* Text color */
         cursor: pointer; /* Add a mouse pointer on hover */
         padding: 15px; /* Some padding */
@@ -125,8 +125,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                         <div class="col-md-4 welcome-grid">
                                             <img src="{{ url('/storage/foto/'.$dlf->image_path) }}" width="300" height="300" alt=""/>
                                             <div class="wel-bottom hvr-bounce-to-bottom" style="width:300px;">
-                                                <h4>{{ $dlf->image_title }}</h4>
-                                                <p>{{ $dlf->image_title }}</p>
+                                                
+                                                <p></p>
                                             </div>
                                         </div>   
                                     @endforeach
@@ -169,12 +169,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                         @if($dln->news_image != '' || $dln->news_image != NULL)
                                           <a href="#" class="mask"><img src="{{ url('/storage/news/'.$dln->news_image) }}" class="img-responsive zoom-img" alt=""/></a>
                                         @else
-                                          <a href="#" class="mask"><img src="{{ asset('not-available.png') }}" class="img-responsive zoom-img" alt=""/></a>
+                                          <a href="{{ url('news/detail/'.$dln->id.'-'.$dln->news_slug) }}" class="mask"><img src="{{ asset('not-available.png') }}" class="img-responsive zoom-img" alt=""/></a>
                                         @endif
                                         
                                     </div>
                                     <div class="col-md-8 new-grid1 hvr-bounce-to-right">
-                                        <div style="color:#555;"><i class="glyphicon glyphicon-calendar"></i> {{ date('d F Y | H:i', strtotime($dln->created_at)) }} <i class="glyphicon glyphicon-user"></i></div>
+                                        <div style="color:#555;font-size: 12px;"><i class="glyphicon glyphicon-calendar" style="color: #555;"></i> {{ date('d M Y | H:i', strtotime($dln->created_at)) }} by <i class="glyphicon glyphicon-user" style="color: #555;"></i> {{ $dln->author }}</div>
                                         <h4><a href="#">{{ $dln->news_title }}</a></h4>
                                         <?php echo $dln->news_content; ?>
                                     </div>

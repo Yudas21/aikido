@@ -100,7 +100,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                             <ul class="nav navbar-nav">
                                 <li><a href="{{ url('') }}">Beranda <span class="sr-only">(current)</span></a></li>
                                 <li><a href="{{ url('about') }}">Tentang Kami</a></li>
-                                <li><a href="{{ url('news') }}">Berita</a></li>
+                                <li class="active"><a href="{{ url('news') }}">Berita</a></li>
                                 <li class="dropdown">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Galeri <span class="caret"></span></a>
                                         <ul class="dropdown-menu">
@@ -108,7 +108,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                             <li><a href="{{ url('gallery/video') }}">Video</a></li>
                                         </ul>
                                 </li>
-                                <li class="active"><a href="{{ url('schedule') }}">Jadwal</a></li>
+                                <li><a href="{{ url('schedule') }}">Jadwal</a></li>
                                 <li><a href="{{ url('contact') }}">Kontak</a></li>
                             </ul>
                         </div>
@@ -120,46 +120,36 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		<!---banner--->
 			<div class="banner-section">
 				<div class="container">
-					<h2>Jadwal Latihan</h2>
+					<h2>Berita</h2>
 				</div>
 			</div>
 		<!---banner--->
 				<!---content--->
 				<div class="content">
-					<div class="typography">
+					<div class="events-section">
 						<div class="container">
-							<div class="bs-docs-example">
-								<table class="table table-striped" style="width: 450px;">
-									<thead>
-										<tr>
-											<th>#</th>
-											<th>Hari</th>
-											<th>Dari</th>
-											<th>Sampai</th>
-										</tr>
-									</thead>
-									<tbody>
-										<?php $no = 1;?>
-										@if(count($data) > 0)
-											@foreach($data as $schedule)
-											   <tr>
-													<td>{{ $no }}.</td>
-													<td>{{ $schedule->from_day }}</td>
-													<td>{{ $schedule->from_time }} WIB</td>
-													<td>{{ $schedule->to_time }} WIB</td>
-												</tr>
-												<?php $no++;?>
-											@endforeach
-										@endif
-									</tbody>
-								</table><br><span style="font-style: italic;font-size: 12px;">note : jadwal latihan sesuai dengan perjanjian jika memenuhi kouta</span> 
-							</div>
-						</div>
+							@foreach ($data as $detail)
+							  <h1 style="margin-top: 25px;">{{ $detail->news_title }}</h1>
+							  @if($detail->news_image !=  NULL || $detail->news_image != '')
+							    <img src="{{ url('/storage/news/'.$detail->news_image) }}" class="img-responsive">
+							  	@endif
+							    <div style="color:#555;font-size: 12px;"><i class="glyphicon glyphicon-calendar"></i> {{ date('d M Y | H:i', strtotime($detail->created_at)) }} by <i class="glyphicon glyphicon-user"></i> {{ $detail->author }}</div>
+							  	<br>
+							    <?php echo $detail->news_content;?><br><br>
+							  
+							@endforeach
+
+							<h3>Berita Lainnya</h3>
+							<ul>
+							@foreach ($other as $d)
+							<li><a href="{{ url('news/detail/'.$d->id.'-'.$d->news_slug) }}">{{ $d->news_title }}</a></li>  
+							@endforeach
+							</ul>
+                            <span style="color: blue;"></span>
+                            <br><br>
+						</div> 
 					</div>
-				<!---typography--->
-					
 				</div>
-		<!---content--->
 				<br><br>
 		<!---content--->
 		<!--footer-->

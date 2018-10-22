@@ -668,7 +668,7 @@ class AdminController extends Controller
         }
         
         
-        return redirect('admin/video_gallery')->with('message', 'Foto baru berhasil ditambah!');
+        return redirect('admin/video_gallery')->with('message', 'Video baru berhasil ditambah!');
     }
 
     public function gallery_video_update($id){
